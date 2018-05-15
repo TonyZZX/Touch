@@ -1,92 +1,62 @@
-﻿using System;
-using System.Threading.Tasks;
-using Windows.UI.Core;
+using System;
+using System.Linq;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.UI.Animations;
-using Touch.ViewModels;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.Web.Http;
+using Touch.Models;
 
 namespace Touch.Views.Pages
 {
-    /// <summary>
-    ///     An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    // ReSharper disable once RedundantExtendsListEntry
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
-        private bool _isRefreshing;
-        private int _rotationDegree = 360;
+        private StorageFile _file;
 
         public MainPage()
         {
             InitializeComponent();
-            // 刷新button点击事件
-            RefreshButton.Click += async (sender, args) =>
-            {
-                if (_isRefreshing)
-                    return;
-                _isRefreshing = true;
-                await StartRotationAnimation();
-                await GalleryGridViewControl.RefreshAsync();
-                _isRefreshing = false;
-            };
-            // 添加回忆点击事件
-            CreateMemoryButton.Click += (sender, args) =>
-            {
-                var rootFrame = Window.Current.Content as Frame;
-                rootFrame?.Navigate(typeof(CreateMemoryPage), MemoryGridViewControl.MemoryListViewModel);
-                Window.Current.Content = rootFrame;
-            };
-            // 设置button点击事件
-            SettingButton.Click += (sender, args) =>
-            {
-                var rootFrame = Window.Current.Content as Frame;
-                rootFrame?.Navigate(typeof(SettingPage));
-                Window.Current.Content = rootFrame;
-            };
-            // tab切换事件
-            MainPivot.SelectionChanged += (sender, args) =>
-            {
-                var pivot = sender as Pivot;
-                CreateMemoryButton.Visibility = pivot?.SelectedIndex == 1 ? Visibility.Visible : Visibility.Collapsed;
-            };
         }
 
-        /// <summary>
-        ///     旋转动画（新开一个线程）
-        /// </summary>
-        /// <returns></returns>
-        private async Task StartRotationAnimation()
+        private async void SelectButton_ClickAsync(object sender, RoutedEventArgs e)
         {
-            var centerX = (float) (RefreshIcon.ActualWidth / 2);
-            var centerY = (float) (RefreshIcon.ActualHeight / 2);
-            await Task.Run(async () =>
+            var picker = new FileOpenPicker
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary
+            };
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+            picker.FileTypeFilter.Add(".bmp");
+            _file = await picker.PickSingleFileAsync();
+            if (_file == null) return;
+            PathText.Text = _file.Path;
+            using (var fileStream = await _file.OpenAsync(FileAccessMode.Read))
+            {
+                var bitmapImage = new BitmapImage();
+                await bitmapImage.SetSourceAsync(fileStream);
+                MyImage.Source = bitmapImage;
+            }
+        }
+
+        private async void UploadButton_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            if (PathText.Text == "") return;
+            using (var httpClient = new HttpClient())
+            {
+                using (var fileStream = await _file.OpenAsync(FileAccessMode.Read))
                 {
-                    while (_isRefreshing)
-                    {
-                        await RefreshIcon.Rotate(_rotationDegree, centerX, centerY, 1000, 0, EasingType.Linear)
-                            .StartAsync();
-                        _rotationDegree += 360;
-                    }
-                });
-            });
-        }
-
-        private void GalleryGridViewControl_OnClickItemStarted(ImageViewModel imageViewModel)
-        {
-            DetailControl.PhotoDetailImageViewModel = imageViewModel;
-            DetailControl.Visibility = Visibility.Visible;
-            DetailControl.Show();
-        }
-
-        private void DetailControl_OnHide()
-        {
-            DetailControl.Visibility = Visibility.Collapsed;
-            GalleryGridViewControl.Dismissed();
+                    var streamContent = new HttpStreamContent(fileStream);
+                    var result = await httpClient.PostAsync(new Uri("http://59.110.137.131:1696"), streamContent);
+                    var content = await result.Content.ReadAsStringAsync();
+                    var trueContent = string.Join("", content.Split('\r', '\n').Skip(2));
+                    var labels = Label.FromJson(trueContent)[0];
+                    LabelResultText.Text = labels.Count == 0
+                        ? "unrecognized"
+                        : string.Join(", ", labels.Select(label => label.Name));
+                }
+            }
         }
     }
 }

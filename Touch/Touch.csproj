@@ -1,22 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{5B8D0BFD-603B-4C10-B679-C3A1DCFEA5CF}</ProjectGuid>
+    <ProjectGuid>{E7C37541-A2CF-4D9A-9F96-3CCE5F510416}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Touch</RootNamespace>
     <AssemblyName>Touch</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>Touch_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>2B68E2B76E603AFDF28A76FC54862C9B09BC9DC0</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -87,117 +89,26 @@
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\TitleBarHelper.cs" />
-    <Compile Include="Controls\BackDrop.cs" />
-    <Compile Include="Controls\INavigableUserControl.cs" />
-    <Compile Include="Controls\MyAdaptiveGridView.cs" />
-    <Compile Include="Controls\NavigableUserControl.cs" />
-    <Compile Include="Converters\BoolToVisible.cs" />
-    <Compile Include="Data\DatabaseBase.cs" />
-    <Compile Include="Data\DatabaseHelper.cs" />
-    <Compile Include="Data\FolderDatabase.cs" />
-    <Compile Include="Data\ImageDatabase.cs" />
-    <Compile Include="Data\MemoryImageDatabase.cs" />
-    <Compile Include="Data\MemoryListDatabase.cs" />
-    <Compile Include="Models\ImageFolderList.cs" />
-    <Compile Include="Models\MemoryList.cs" />
-    <Compile Include="Models\MemoryModel.cs" />
-    <Compile Include="Models\FolderModel.cs" />
-    <Compile Include="Models\FolderList.cs" />
-    <Compile Include="Models\ImageModel.cs" />
-    <Compile Include="Models\MonthYearDateTime.cs" />
-    <Compile Include="Models\PhotoClustering.cs" />
-    <Compile Include="Models\StreetViewMetadata.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\CommandHelpers.cs" />
-    <Compile Include="ViewModels\FolderListViewModel.cs" />
-    <Compile Include="ViewModels\GalleryImageListViewModel.cs" />
-    <Compile Include="ViewModels\ImageMonthGroup.cs" />
-    <Compile Include="ViewModels\MemoryListViewModel.cs" />
-    <Compile Include="ViewModels\FolderViewModel.cs" />
-    <Compile Include="ViewModels\ImageViewModel.cs" />
-    <Compile Include="ViewModels\MemoryViewModel.cs" />
-    <Compile Include="ViewModels\StreetImageListViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelHelpers.cs" />
-    <Compile Include="Views\Pages\CreateMemoryPage.xaml.cs">
-      <DependentUpon>CreateMemoryPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Label.cs" />
     <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\PathPov.cs" />
-    <Compile Include="Views\Pages\MemoryDetailPage.xaml.cs">
-      <DependentUpon>MemoryDetailPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\SettingPage.xaml.cs">
-      <DependentUpon>SettingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\SplashPage.xaml.cs">
-      <DependentUpon>SplashPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\StreetViewPage.xaml.cs">
-      <DependentUpon>StreetViewPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\AboutControl.xaml.cs">
-      <DependentUpon>AboutControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\BackButtonControl.xaml.cs">
-      <DependentUpon>BackButtonControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\FolderSourceControl.xaml.cs">
-      <DependentUpon>FolderSourceControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\GalleryGridViewControl.xaml.cs">
-      <DependentUpon>GalleryGridViewControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\MemoryGridViewControl.xaml.cs">
-      <DependentUpon>MemoryGridViewControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\PhotoDetailControl.xaml.cs">
-      <DependentUpon>PhotoDetailControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\PhotoGridViewControl.xaml.cs">
-      <DependentUpon>PhotoGridViewControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\ProgressRingGridControl.xaml.cs">
-      <DependentUpon>ProgressRingGridControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\StreetGalleryControl.xaml.cs">
-      <DependentUpon>StreetGalleryControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\TitleBarControl.xaml.cs">
-      <DependentUpon>TitleBarControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\TransparentBackgroundControl.xaml.cs">
-      <DependentUpon>TransparentBackgroundControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\VideoButtonControl.xaml.cs">
-      <DependentUpon>VideoButtonControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <PRIResource Include="Strings\en-US\Resources.resw" />
-    <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <None Include="Touch_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Gray.png" />
-    <Content Include="Assets\MySplashScreen.png" />
-    <Content Include="Assets\SplashScreen.scale-100.png" />
-    <Content Include="Assets\SplashScreen.scale-125.png" />
-    <Content Include="Assets\SplashScreen.scale-150.png" />
-    <Content Include="Assets\SplashScreen.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -206,110 +117,24 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="Web\Test.html" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ResourceDictionaries\ColorDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="ResourceDictionaries\DimentionDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="ResourceDictionaries\Mdl2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="ResourceDictionaries\StyleDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="ResourceDictionaries\TemplateDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Views\Pages\CreateMemoryPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Pages\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pages\MemoryDetailPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pages\SettingPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pages\SplashPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pages\StreetViewPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\AboutControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\BackButtonControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\FolderSourceControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UserControls\GalleryGridViewControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\MemoryGridViewControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\PhotoDetailControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\PhotoGridViewControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\ProgressRingGridControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\StreetGalleryControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\TitleBarControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\TransparentBackgroundControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\VideoButtonControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.1.4</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
