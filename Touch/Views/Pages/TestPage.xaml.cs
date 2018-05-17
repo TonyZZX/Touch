@@ -1,3 +1,5 @@
+#region
+
 using System;
 using System.Linq;
 using Windows.Storage;
@@ -7,13 +9,15 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Http;
 using Touch.Models;
 
+#endregion
+
 namespace Touch.Views.Pages
 {
-    public sealed partial class MainPage
+    internal sealed partial class TestPage
     {
         private StorageFile _file;
 
-        public MainPage()
+        public TestPage()
         {
             InitializeComponent();
         }

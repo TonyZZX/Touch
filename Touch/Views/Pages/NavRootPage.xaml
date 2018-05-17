@@ -1,0 +1,29 @@
+<Page
+    x:Class="Touch.Views.Pages.NavRootPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="NavRootPage_OnLoaded">
+
+    <Grid>
+        <NavigationView x:Name="NavView" AlwaysShowHeader="False" IsSettingsVisible="True"
+                        ItemInvoked="NavView_OnItemInvoked" IsBackButtonVisible="Collapsed"><!--TODO: Back Button-->
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Gallery">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE138;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Test">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="NavFrame" Navigated="NavFrame_OnNavigated" />
+        </NavigationView>
+    </Grid>
+</Page>

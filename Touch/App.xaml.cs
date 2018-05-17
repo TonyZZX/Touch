@@ -1,10 +1,15 @@
+#region
+
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Touch.Data;
 using Touch.Views.Pages;
+
+#endregion
 
 namespace Touch
 {
@@ -22,6 +27,8 @@ namespace Touch
         {
             InitializeComponent();
             Suspending += OnSuspending;
+
+            Database.InitTables();
         }
 
         /// <summary>
@@ -50,7 +57,8 @@ namespace Touch
             }
 
             if (e.PrelaunchActivated) return;
-            if (rootFrame.Content == null) rootFrame.Navigate(typeof(MainPage), e.Arguments);
+            if (rootFrame.Content == null)
+                rootFrame.Navigate(typeof(NavRootPage), e.Arguments);
 
             // Ensure the current window is active
             Window.Current.Activate();
