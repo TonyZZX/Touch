@@ -14,11 +14,12 @@ namespace Touch.Views.Pages
 {
     internal sealed partial class SettingsPage
     {
-        private readonly SettingsViewModel _viewModel = new SettingsViewModel();
+        private readonly SettingsViewModel _viewModel;
 
         public SettingsPage()
         {
             InitializeComponent();
+            _viewModel = new SettingsViewModel();
         }
 
         private void SettingsPage_OnLoaded(object sender, RoutedEventArgs e)

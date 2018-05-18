@@ -11,12 +11,12 @@
 
     <Grid>
         <StackPanel Padding="100">
-            <Button Content="Add Folders" Click="AddFolderBtn_OnClickAsync" />
+            <Button Content="Add Images" Click="AddFolderBtn_OnClickAsync" />
             <ListView ItemsSource="{x:Bind _viewModel.Folders, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Folder">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind Path}" />
+                            <TextBlock Text="{x:Bind Path, Mode=OneWay}" />
                             <Button Click="DeleteBtn_OnClick">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
                             </Button>

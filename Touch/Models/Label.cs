@@ -17,8 +17,8 @@ namespace Touch.Models
         /// </summary>
         public static readonly string[] Category =
         {
-            "building", "grass", "tree", "cow", "horse", "sheep", "sky", "mountain", "airplane", "water", "face", "car",
-            "bicycle", "flower", "sign", "bird", "book", "chair", "road", "cat", "dog", "body", "boat"
+            "Building", "Grass", "Tree", "Cow", "Horse", "Sheep", "Sky", "Mountain", "Airplane", "Water", "Face", "Car",
+            "Bicycle", "Flower", "Sign", "Bird", "Book", "Chair", "Road", "Cat", "Dog", "Body", "Boat"
         };
 
         /// <summary>

@@ -4,8 +4,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:models="using:Touch.Models"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="GalleryPage_OnLoadedAsync">
 
-    <Grid />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <AutoSuggestBox PlaceholderText="Search" QueryIcon="Find" Width="200"
+                        TextChanged="AutoSuggestBox_OnTextChanged" SuggestionChosen="AutoSuggestBox_OnSuggestionChosen"
+                        QuerySubmitted="AutoSuggestBox_OnQuerySubmitted" />
+        <controls:AdaptiveGridView Grid.Row="1" ItemHeight="300" DesiredWidth="400"
+                                   animations:ReorderGridAnimation.Duration="250"
+                                   ItemsSource="{x:Bind _viewModel.Images, Mode=OneWay}">
+            <controls:AdaptiveGridView.ItemTemplate>
+                <DataTemplate x:DataType="models:Image">
+                    <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                </DataTemplate>
+            </controls:AdaptiveGridView.ItemTemplate>
+        </controls:AdaptiveGridView>
+    </Grid>
 </Page>

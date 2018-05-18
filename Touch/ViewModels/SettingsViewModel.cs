@@ -10,6 +10,9 @@ namespace Touch.ViewModels
 {
     internal class SettingsViewModel
     {
+        /// <summary>
+        ///     Folder table in database
+        /// </summary>
         private readonly FolderTable _folderTable;
 
         public SettingsViewModel()
@@ -21,7 +24,7 @@ namespace Touch.ViewModels
         public ObservableCollection<Folder> Folders { get; }
 
         /// <summary>
-        ///     Load folders from database and add them to collections
+        ///     Load folders from database and add them to collections.
         /// </summary>
         public void LoadFolders()
         {
@@ -33,7 +36,7 @@ namespace Touch.ViewModels
         }
 
         /// <summary>
-        ///     Add folder to database and collections
+        ///     Add folder to database and collections.
         /// </summary>
         /// <param name="folder">Folder</param>
         public void AddFolder(Folder folder)
@@ -43,7 +46,7 @@ namespace Touch.ViewModels
         }
 
         /// <summary>
-        ///     Remove folder from database and collections
+        ///     Remove folder from database and collections.
         /// </summary>
         /// <param name="folder">Folder</param>
         public void RemoveFolder(Folder folder)
