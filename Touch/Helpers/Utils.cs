@@ -11,11 +11,18 @@ namespace Touch.Helpers
 {
     internal static class Utils
     {
+        /// <summary>
+        ///     Wait for all tasks in parallel
+        /// </summary>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public static async Task<IEnumerable<TOut>> WaitAllTasksAsync<TIn, TOut>(IEnumerable<TIn> input,
             Func<TIn, Task<TOut>> func)
         {
             var tasks = input.Select(func).ToList();
-            // Wait for all tasks in parallel
             await Task.WhenAll(tasks);
             return tasks.Select(task => task.Result);
         }

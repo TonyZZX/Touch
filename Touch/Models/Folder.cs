@@ -1,6 +1,7 @@
 #region
 
 using System;
+using Windows.Storage.AccessCache;
 
 #endregion
 
@@ -17,7 +18,7 @@ namespace Touch.Models
         public string Path { get; set; }
 
         /// <summary>
-        ///     Access token in FutureAccessList
+        ///     Access token in <see cref="StorageApplicationPermissions.FutureAccessList" />
         /// </summary>
         public string Token { get; set; }
 

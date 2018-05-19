@@ -10,7 +10,7 @@
 
     <Grid>
         <NavigationView x:Name="NavView" AlwaysShowHeader="False" IsSettingsVisible="True"
-                        ItemInvoked="NavView_OnItemInvoked" IsBackButtonVisible="Collapsed"><!--TODO: Back Button-->
+                        ItemInvoked="NavView_OnItemInvoked" BackRequested="NavView_OnBackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Gallery">
                     <NavigationViewItem.Icon>

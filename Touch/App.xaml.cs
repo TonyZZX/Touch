@@ -4,9 +4,11 @@ using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Autofac;
 using Touch.Data;
+using Touch.Services;
+using Touch.ViewModels;
 using Touch.Views.Pages;
 
 #endregion
@@ -16,7 +18,6 @@ namespace Touch
     /// <summary>
     ///     Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    // ReSharper disable once UnusedMember.Global
     public sealed partial class App
     {
         /// <summary>
@@ -40,26 +41,28 @@ namespace Touch
         {
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (!(Window.Current.Content is Frame rootFrame))
+            if (e.PrelaunchActivated || Window.Current.Content != null) return;
+            // Create a Frame to act as the navigation context and navigate to the first page
+            var rootPage = new NavRootPage();
+
+            if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
-
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+                //TODO: Load state from previously suspended application
             }
 
-            if (e.PrelaunchActivated) return;
-            if (rootFrame.Content == null)
-                rootFrame.Navigate(typeof(NavRootPage), e.Arguments);
+            var rootFrame = rootPage.MainNavFrame;
+            rootFrame.NavigationFailed += OnNavigationFailed;
 
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(rootFrame);
+            builder.RegisterType<SettingsViewModel>();
+            builder.RegisterType<GalleryViewModel>();
+            builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+            var container = builder.Build();
+            rootPage.InitializeNavigationService(container.Resolve<INavigationService>());
+
+            // Place the frame in the current Window
+            Window.Current.Content = rootPage;
             // Ensure the current window is active
             Window.Current.Activate();
         }
