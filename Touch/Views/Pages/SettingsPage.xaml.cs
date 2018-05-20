@@ -1,7 +1,6 @@
 #region
 
 using System;
-using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -36,15 +35,13 @@ namespace Touch.Views.Pages
             folderPicker.FileTypeFilter.Add("*");
             var folder = await folderPicker.PickSingleFolderAsync();
             if (folder == null) return;
-            var token = StorageApplicationPermissions.FutureAccessList.Add(folder);
-            _viewModel.AddFolder(new Folder {Path = folder.Path, Token = token});
+            _viewModel.AddFolder(folder);
         }
 
         private void DeleteBtn_OnClick(object sender, RoutedEventArgs e)
         {
             if (!((sender as Button)?.DataContext is Folder clickedfolder)) return;
             _viewModel.RemoveFolder(clickedfolder);
-            StorageApplicationPermissions.FutureAccessList.Remove(clickedfolder.Token);
         }
     }
 }

@@ -1,6 +1,8 @@
 #region
 
 using System.Collections.ObjectModel;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Touch.Data;
 using Touch.Models;
 
@@ -36,22 +38,24 @@ namespace Touch.ViewModels
         }
 
         /// <summary>
-        ///     Add folder to database and collections.
+        ///     Add folder to <see cref="StorageApplicationPermissions.FutureAccessList" />, database and collections.
         /// </summary>
         /// <param name="folder">Folder</param>
-        public void AddFolder(Folder folder)
+        public void AddFolder(StorageFolder folder)
         {
-            _folderTable.Insert(folder.Path, folder.Token);
-            Folders.Add(folder);
+            var token = StorageApplicationPermissions.FutureAccessList.Add(folder);
+            _folderTable.Insert(folder.Path, token);
+            Folders.Add(new Folder {Path = folder.Path, Token = token});
         }
 
         /// <summary>
-        ///     Remove folder from database and collections.
+        ///     Remove folder from database, <see cref="StorageApplicationPermissions.FutureAccessList" /> and collections.
         /// </summary>
         /// <param name="folder">Folder</param>
         public void RemoveFolder(Folder folder)
         {
             _folderTable.Delete(folder.Path);
+            StorageApplicationPermissions.FutureAccessList.Remove(folder.Token);
             Folders.Remove(folder);
         }
     }

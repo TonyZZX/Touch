@@ -22,7 +22,7 @@
                         QuerySubmitted="AutoSuggestBox_OnQuerySubmitted" />
         <controls:AdaptiveGridView Grid.Row="1" ItemHeight="300" DesiredWidth="400"
                                    animations:ReorderGridAnimation.Duration="250"
-                                   ItemsSource="{x:Bind _viewModel.Images, Mode=OneWay}">
+                                   ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Image">
                     <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />

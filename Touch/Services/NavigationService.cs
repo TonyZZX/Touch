@@ -42,7 +42,6 @@ namespace Touch.Services
             // Investigate a way to put these mappings into the IOC container
             // so that we don't have a hard dependency on the page types for multiplatform
             _pageDelegateDict = new Dictionary<Type, NavigatedToViewModelDelegate>();
-            RegisterPageViewModel<SettingsPage, SettingsViewModel>();
             RegisterPageViewModel<GalleryPage, GalleryViewModel>();
         }
 
@@ -66,6 +65,22 @@ namespace Touch.Services
         public event EventHandler<bool> IsNavigatingChanged;
 
         public event EventHandler Navigated;
+
+        /// <summary>
+        ///     Navigate in the back direction
+        /// </summary>
+        /// <returns>Void task</returns>
+        public async Task GoBackAsync()
+        {
+            if (_navFrame.CanGoBack)
+            {
+                IsNavigating = true;
+
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() => { _navFrame.GoBack(); });
+            }
+        }
+
+        #region Navigate
 
         /// <summary>
         ///     Navigate to another page
@@ -94,19 +109,9 @@ namespace Touch.Services
             await DispatcherHelper.ExecuteOnUIThreadAsync(() => { _navFrame.Navigate(sourcePageType, parameter); });
         }
 
-        /// <summary>
-        ///     Navigate in the back direction
-        /// </summary>
-        /// <returns>Void task</returns>
-        public async Task GoBackAsync()
-        {
-            if (_navFrame.CanGoBack)
-            {
-                IsNavigating = true;
+        #endregion
 
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() => { _navFrame.GoBack(); });
-            }
-        }
+        #region Page with ViewModel Navigation
 
         /// <summary>
         ///     Register page with its delegate for initializing view model
@@ -139,5 +144,7 @@ namespace Touch.Services
         /// </summary>
         /// <param name="page">Page whose view model needs to initialized</param>
         private delegate void NavigatedToViewModelDelegate(object page);
+
+        #endregion
     }
 }

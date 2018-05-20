@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Touch.Data;
 
 #endregion
 
@@ -12,15 +13,6 @@ namespace Touch.Models
     /// </summary>
     internal class Label
     {
-        /// <summary>
-        ///     23 kinds of different labels
-        /// </summary>
-        public static readonly string[] Category =
-        {
-            "Building", "Grass", "Tree", "Cow", "Horse", "Sheep", "Sky", "Mountain", "Airplane", "Water", "Face", "Car",
-            "Bicycle", "Flower", "Sign", "Bird", "Book", "Chair", "Road", "Cat", "Dog", "Body", "Boat"
-        };
-
         /// <summary>
         ///     Image label
         /// </summary>
@@ -38,7 +30,7 @@ namespace Touch.Models
         /// <summary>
         ///     Label name in category
         /// </summary>
-        public string Name => Category[Num];
+        public string Name => new Category().Get(Num);
 
         /// <summary>
         ///     Generate labels from JSON

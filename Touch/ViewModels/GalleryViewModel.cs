@@ -3,14 +3,16 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.AccessCache;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
 using Windows.UI.Xaml.Media.Imaging;
+using Touch.Data;
 using Touch.Helpers;
 using Touch.Models;
+using Touch.Services;
+using Touch.Views.Pages;
 
 #endregion
 
@@ -18,8 +20,17 @@ namespace Touch.ViewModels
 {
     internal class GalleryViewModel
     {
-        public GalleryViewModel()
+        /// <summary>
+        ///     Label category
+        /// </summary>
+        private readonly Category _category;
+
+        private readonly INavigationService _navigationService;
+
+        public GalleryViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
+            _category = new Category();
             Images = new ObservableCollection<Image>();
         }
 
@@ -63,8 +74,7 @@ namespace Touch.ViewModels
         /// <returns>Suggestion texts</returns>
         public IList<string> GetSuggestions(string query)
         {
-            return Label.Category.Where(item => item.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0)
-                .OrderBy(s => s).ToList();
+            return _category.GetMatchList(query);
         }
 
         /// <summary>
@@ -74,7 +84,16 @@ namespace Touch.ViewModels
         /// <returns>Whether is in seggestions</returns>
         public bool IsInSuggestions(string query)
         {
-            return Label.Category.Contains(query);
+            return _category.IsInCategory(query);
+        }
+
+        /// <summary>
+        ///     Navigate to <see cref="GallerySearchPage" />
+        /// </summary>
+        /// <param name="query">Query text</param>
+        public void NavigateToSearchPage(string query)
+        {
+            _navigationService.NavigateAsync(typeof(GallerySearchPage), query);
         }
     }
 }

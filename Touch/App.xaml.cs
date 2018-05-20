@@ -55,7 +55,6 @@ namespace Touch
 
             var builder = new ContainerBuilder();
             builder.RegisterInstance(rootFrame);
-            builder.RegisterType<SettingsViewModel>();
             builder.RegisterType<GalleryViewModel>();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             var container = builder.Build();
