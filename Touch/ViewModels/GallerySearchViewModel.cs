@@ -50,7 +50,7 @@ namespace Touch.ViewModels
                     foreach (var image in selectedImages)
                     {
                         var storageFile = await Utils.GetFileAsync(image.Path, folders);
-                        using (var thumbnail = await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 300))
+                        using (var thumbnail = await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 240))
                         {
                             var bitmap = new BitmapImage();
                             bitmap.SetSource(thumbnail);

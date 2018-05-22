@@ -111,7 +111,7 @@ namespace Touch.ViewModels
                             if (newImages.Contains(newImage)) continue;
                             // TODO: Use local cache
                             using (var thumbnail =
-                                await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 300))
+                                await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 240))
                             {
                                 var bitmap = new BitmapImage();
                                 bitmap.SetSource(thumbnail);

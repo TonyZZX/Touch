@@ -26,6 +26,7 @@ namespace Touch.Helpers
         {
             using (var httpClient = new HttpClient())
             {
+                // TODO: Single Instance
                 using (var httpResponse =
                     await httpClient.PostAsync(new Uri("http://59.110.137.131:1696"), streamContent))
                 {

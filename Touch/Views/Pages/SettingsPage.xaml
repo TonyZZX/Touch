@@ -10,20 +10,65 @@
     Loaded="SettingsPage_OnLoadedAsync">
 
     <Grid>
-        <StackPanel Padding="100">
-            <Button Content="Add Images" Click="AddFolderBtn_OnClickAsync" />
-            <ListView ItemsSource="{x:Bind _viewModel.Folders, Mode=OneWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Folder">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind Path, Mode=OneWay}" />
-                            <Button Click="DeleteBtn_OnClickAsync">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
-                            </Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <TextBlock Text="Settings" Style="{StaticResource PageTitleStyle}" />
+                    <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed" />
+                </Grid>
+                <ProgressBar Style="{StaticResource HeaderProgressBarStyle}" />
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" Margin="24,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <StackPanel Margin="12,0,0,25">
+                    <TextBlock Text="Sources" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock Text="Here's a list of what we've found so far." Style="{StaticResource BodyTextStyle}" />
+
+                    <Button Content="Add Images" Click="AddFolderBtn_OnClickAsync" />
+                    <ListView HorizontalAlignment="Left" SelectionMode="None" IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind _viewModel.Folders, Mode=OneWay}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Folder">
+                                <RelativePanel Width="320">
+                                    <FontIcon x:Name="FontIcon" RelativePanel.AlignVerticalCenterWithPanel="True"
+                                              RelativePanel.AlignLeftWithPanel="True"
+                                              Margin="8" FontFamily="Segoe MDL2 Assets"
+                                              Glyph="{x:Bind Symbol, Mode=OneWay}" FontSize="24" />
+                                    <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True"
+                                               RelativePanel.RightOf="FontIcon" RelativePanel.LeftOf="DeleteButton"
+                                               Margin="8" Text="{x:Bind Path, Mode=OneWay}" TextWrapping="Wrap" />
+                                    <Button x:Name="DeleteButton" RelativePanel.AlignVerticalCenterWithPanel="True"
+                                            RelativePanel.AlignRightWithPanel="True"
+                                            Style="{StaticResource ListButtonStyle}"
+                                            Width="48" Height="48" Click="DeleteBtn_OnClickAsync">
+                                        <FontIcon HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;" />
+                                    </Button>
+                                </RelativePanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+
+                <StackPanel Margin="12,0,0,25">
+                    <TextBlock Text="About this app" Style="{StaticResource SubtitleTextBlockStyle}" />
+                    <TextBlock x:Name="VersionText" Margin="0,8,0,0" />
+                </StackPanel>
+                <Button Margin="12,8,0,0" Content="Send Feedback" Click="FeedbackBtn_OnClickAsync" />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

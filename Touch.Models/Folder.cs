@@ -2,6 +2,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #endregion
 
@@ -22,6 +23,12 @@ namespace Touch.Models
         ///     Access token in FutureAccessList
         /// </summary>
         public string Token { get; set; }
+
+        /// <summary>
+        ///     Symbol used in list
+        /// </summary>
+        [NotMapped]
+        public string Symbol => "\uE8B7";
 
         public bool Equals(Folder other)
         {
