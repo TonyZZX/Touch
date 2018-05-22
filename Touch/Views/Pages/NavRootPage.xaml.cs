@@ -26,6 +26,9 @@ namespace Touch.Views.Pages
             Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
         }
 
+        /// <summary>
+        ///     Expose NavFrame to App
+        /// </summary>
         public Frame MainNavFrame => NavFrame;
 
         public void InitializeNavigationService(INavigationService navigationService)
@@ -56,9 +59,6 @@ namespace Touch.Views.Pages
                     case "Gallery":
                         _navigationService.NavigateAsync(typeof(GalleryPage));
                         break;
-                    case "Test":
-                        _navigationService.NavigateAsync(typeof(TestPage));
-                        break;
                 }
         }
 
@@ -73,9 +73,6 @@ namespace Touch.Views.Pages
             {
                 case Type _ when e.SourcePageType == typeof(GalleryPage):
                     ((NavigationViewItem) NavView.MenuItems[0]).IsSelected = true;
-                    break;
-                case Type _ when e.SourcePageType == typeof(TestPage):
-                    ((NavigationViewItem) NavView.MenuItems[1]).IsSelected = true;
                     break;
             }
         }

@@ -17,11 +17,6 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE138;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Test">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" />
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
             </NavigationView.MenuItems>
             <Frame x:Name="NavFrame" Navigated="NavFrame_OnNavigated" />
         </NavigationView>

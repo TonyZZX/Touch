@@ -1,6 +1,8 @@
 #region
 
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using Touch.ViewModels;
 
 #endregion
 
@@ -8,6 +10,8 @@ namespace Touch.Views.Pages
 {
     internal sealed partial class GallerySearchPage
     {
+        private GallerySearchViewModel _viewModel;
+
         public GallerySearchPage()
         {
             InitializeComponent();
@@ -16,7 +20,12 @@ namespace Touch.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.Parameter is string query) TestText.Text = query;
+            _viewModel = new GallerySearchViewModel(e.Parameter as string);
+        }
+
+        private async void GallerySearchPage_OnLoadedAsync(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.LoadImagesAsync();
         }
     }
 }

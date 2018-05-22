@@ -6,9 +6,12 @@ using System.Linq;
 
 #endregion
 
-namespace Touch.Data
+namespace Touch.Models
 {
-    internal class Category
+    /// <summary>
+    ///     Label category
+    /// </summary>
+    public class Category
     {
         /// <summary>
         ///     23 kinds of different labels
@@ -30,7 +33,17 @@ namespace Touch.Data
         }
 
         /// <summary>
-        ///     Get matched list based on text.
+        ///     Get index of label
+        /// </summary>
+        /// <param name="label">Label text</param>
+        /// <returns>Return index of label if exists, otherwise return -1</returns>
+        public int Get(string label)
+        {
+            return Array.FindIndex(_data, s => s == label);
+        }
+
+        /// <summary>
+        ///     Get matched list based on text
         /// </summary>
         /// <param name="query">Label text</param>
         /// <returns>Matched list</returns>

@@ -6,7 +6,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using Autofac;
-using Touch.Data;
+using Microsoft.EntityFrameworkCore;
+using Touch.Models;
 using Touch.Services;
 using Touch.ViewModels;
 using Touch.Views.Pages;
@@ -29,7 +30,11 @@ namespace Touch
             InitializeComponent();
             Suspending += OnSuspending;
 
-            Database.InitTables();
+            // The first time that the app runs, this will take care of creating the local database for us.
+            using (var db = new Database())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>

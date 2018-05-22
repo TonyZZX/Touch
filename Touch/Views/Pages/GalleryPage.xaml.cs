@@ -2,6 +2,7 @@
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Touch.Services;
 using Touch.ViewModels;
 
@@ -17,6 +18,15 @@ namespace Touch.Views.Pages
         }
 
         public GalleryViewModel ViewModel { get; set; }
+
+        /// <summary>
+        ///     For async loading, update bindings.
+        /// </summary>
+        public void UpdateBindings()
+        {
+            // Must have this! Otherwise, image list show as empty.
+            Bindings?.Update();
+        }
 
         private async void GalleryPage_OnLoadedAsync(object sender, RoutedEventArgs e)
         {
@@ -37,12 +47,20 @@ namespace Touch.Views.Pages
             AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             // BUG: Don't autocomplete the TextBox when we are showing "no results"
-            if (ViewModel.IsInSuggestions(args.SelectedItem as string)) sender.Text = (string) args.SelectedItem;
+            if (args.SelectedItem is string query && query != "No results" && ViewModel.IsInSuggestions(query))
+                sender.Text = query;
         }
 
         private void AutoSuggestBox_OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            ViewModel.NavigateToSearchPage(sender.Text);
+            var query = sender.Text;
+            if (query != "" && query != "No results") ViewModel.NavigateToSearchPage(query);
+        }
+
+        private async void UploadBtn_OnClickAsync(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.UploadImagesAsync();
+            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
     }
 }

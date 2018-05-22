@@ -7,7 +7,7 @@
     xmlns:models="using:Touch.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Loaded="SettingsPage_OnLoaded">
+    Loaded="SettingsPage_OnLoadedAsync">
 
     <Grid>
         <StackPanel Padding="100">
@@ -17,7 +17,7 @@
                     <DataTemplate x:DataType="models:Folder">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{x:Bind Path, Mode=OneWay}" />
-                            <Button Click="DeleteBtn_OnClick">
+                            <Button Click="DeleteBtn_OnClickAsync">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
                             </Button>
                         </StackPanel>

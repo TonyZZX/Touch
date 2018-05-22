@@ -2,29 +2,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Touch.Models;
 
 #endregion
 
 namespace Touch.Helpers
 {
-    internal static class Utils
+    internal class Utils
     {
         /// <summary>
-        ///     Wait for all tasks in parallel
+        ///     Get <see cref="StorageFile" /> with file path from folder list.
         /// </summary>
-        /// <typeparam name="TIn"></typeparam>
-        /// <typeparam name="TOut"></typeparam>
-        /// <param name="input"></param>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public static async Task<IEnumerable<TOut>> WaitAllTasksAsync<TIn, TOut>(IEnumerable<TIn> input,
-            Func<TIn, Task<TOut>> func)
+        /// <param name="filePath">File path</param>
+        /// <param name="folders">folder list</param>
+        /// <returns>StorageFile</returns>
+        public static async Task<StorageFile> GetFileAsync(string filePath, IList<Folder> folders)
         {
-            var tasks = input.Select(func).ToList();
-            await Task.WhenAll(tasks);
-            return tasks.Select(task => task.Result);
+            var folder = folders[0];
+            var relativePath = folder.GetRelativePath(filePath);
+            foreach (var f in folders)
+            {
+                folder = f;
+                relativePath = folder.GetRelativePath(filePath);
+                if (relativePath != "") break;
+            }
+
+            var storageFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(folder.Token);
+            var storageFile = await storageFolder.GetFileAsync(relativePath);
+            return storageFile;
         }
     }
 }

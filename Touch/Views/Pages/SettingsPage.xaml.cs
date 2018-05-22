@@ -21,9 +21,9 @@ namespace Touch.Views.Pages
             _viewModel = new SettingsViewModel();
         }
 
-        private void SettingsPage_OnLoaded(object sender, RoutedEventArgs e)
+        private async void SettingsPage_OnLoadedAsync(object sender, RoutedEventArgs e)
         {
-            _viewModel.LoadFolders();
+            await _viewModel.LoadFoldersAsync();
         }
 
         private async void AddFolderBtn_OnClickAsync(object sender, RoutedEventArgs e)
@@ -33,15 +33,15 @@ namespace Touch.Views.Pages
                 SuggestedStartLocation = PickerLocationId.PicturesLibrary
             };
             folderPicker.FileTypeFilter.Add("*");
-            var folder = await folderPicker.PickSingleFolderAsync();
-            if (folder == null) return;
-            _viewModel.AddFolder(folder);
+            var storageFolder = await folderPicker.PickSingleFolderAsync();
+            if (storageFolder == null) return;
+            await _viewModel.AddFolderAsync(storageFolder);
         }
 
-        private void DeleteBtn_OnClick(object sender, RoutedEventArgs e)
+        private async void DeleteBtn_OnClickAsync(object sender, RoutedEventArgs e)
         {
             if (!((sender as Button)?.DataContext is Folder clickedfolder)) return;
-            _viewModel.RemoveFolder(clickedfolder);
+            await _viewModel.RemoveFolderAsync(clickedfolder);
         }
     }
 }

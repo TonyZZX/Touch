@@ -1,9 +1,11 @@
 #region
 
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Touch.Data;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Touch.Models;
 
 #endregion
@@ -12,51 +14,65 @@ namespace Touch.ViewModels
 {
     internal class SettingsViewModel
     {
-        /// <summary>
-        ///     Folder table in database
-        /// </summary>
-        private readonly FolderTable _folderTable;
-
         public SettingsViewModel()
         {
-            _folderTable = new FolderTable();
             Folders = new ObservableCollection<Folder>();
         }
 
+        /// <summary>
+        ///     Folder list
+        /// </summary>
         public ObservableCollection<Folder> Folders { get; }
 
         /// <summary>
         ///     Load folders from database and add them to collections.
         /// </summary>
-        public void LoadFolders()
+        /// <returns>Void Task</returns>
+        public async Task LoadFoldersAsync()
         {
-            using (var query = _folderTable.SelectAll())
+            await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                while (query.Read())
-                    Folders.Add(new Folder {Path = query.GetString(0), Token = query.GetString(1)});
-            }
+                using (var db = new Database())
+                {
+                    foreach (var folder in db.Folders) Folders.Add(folder);
+                }
+            });
         }
 
         /// <summary>
         ///     Add folder to <see cref="StorageApplicationPermissions.FutureAccessList" />, database and collections.
         /// </summary>
-        /// <param name="folder">Folder</param>
-        public void AddFolder(StorageFolder folder)
+        /// <param name="storageFolder">StorageFolder</param>
+        /// <returns>Void Task</returns>
+        public async Task AddFolderAsync(StorageFolder storageFolder)
         {
-            var token = StorageApplicationPermissions.FutureAccessList.Add(folder);
-            _folderTable.Insert(folder.Path, token);
-            Folders.Add(new Folder {Path = folder.Path, Token = token});
+            if (Folders.Any(f => f.Path == storageFolder.Path)) return;
+            var token = StorageApplicationPermissions.FutureAccessList.Add(storageFolder);
+            var folder = new Folder {Path = storageFolder.Path, Token = token};
+            using (var db = new Database())
+            {
+                db.Folders.Add(folder);
+                db.SaveChanges();
+            }
+
+            await DispatcherHelper.ExecuteOnUIThreadAsync(() => { Folders.Add(folder); });
         }
 
         /// <summary>
         ///     Remove folder from database, <see cref="StorageApplicationPermissions.FutureAccessList" /> and collections.
         /// </summary>
         /// <param name="folder">Folder</param>
-        public void RemoveFolder(Folder folder)
+        /// <returns>Void Task</returns>
+        public async Task RemoveFolderAsync(Folder folder)
         {
-            _folderTable.Delete(folder.Path);
+            using (var db = new Database())
+            {
+                db.Folders.Remove(folder);
+                db.SaveChanges();
+            }
+
             StorageApplicationPermissions.FutureAccessList.Remove(folder.Token);
-            Folders.Remove(folder);
+            await DispatcherHelper.ExecuteOnUIThreadAsync(() => { Folders.Remove(folder); });
         }
     }
 }

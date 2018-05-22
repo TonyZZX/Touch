@@ -14,6 +14,9 @@ using Touch.Views.Pages;
 
 namespace Touch.Services
 {
+    /// <summary>
+    ///     NavigationService
+    /// </summary>
     internal class NavigationService : INavigationService
     {
         /// <summary>
@@ -31,6 +34,9 @@ namespace Touch.Services
         /// </summary>
         private readonly Dictionary<Type, NavigatedToViewModelDelegate> _pageDelegateDict;
 
+        /// <summary>
+        ///     Whether it is navigating
+        /// </summary>
         private bool _isNavigating;
 
         public NavigationService(IComponentContext iocResolver, Frame navFrame)
@@ -45,8 +51,14 @@ namespace Touch.Services
             RegisterPageViewModel<GalleryPage, GalleryViewModel>();
         }
 
+        /// <summary>
+        ///     Gets a value that indicates whether there is at least one entry in back navigation history.
+        /// </summary>
         public bool CanGoBack => _navFrame.CanGoBack;
 
+        /// <summary>
+        ///     Whether it is navigating
+        /// </summary>
         public bool IsNavigating
         {
             get => _isNavigating;
@@ -62,14 +74,20 @@ namespace Touch.Services
             }
         }
 
+        /// <summary>
+        ///     Whether the state of navigation is changed
+        /// </summary>
         public event EventHandler<bool> IsNavigatingChanged;
 
+        /// <summary>
+        ///     Navigation finished
+        /// </summary>
         public event EventHandler Navigated;
 
         /// <summary>
-        ///     Navigate in the back direction
+        ///     Navigates to the most recent item in back navigation history, if a Frame manages its own navigation history.
         /// </summary>
-        /// <returns>Void task</returns>
+        /// <returns>Void Task</returns>
         public async Task GoBackAsync()
         {
             if (_navFrame.CanGoBack)
@@ -80,10 +98,8 @@ namespace Touch.Services
             }
         }
 
-        #region Navigate
-
         /// <summary>
-        ///     Navigate to another page
+        ///     Navigate to another page without parameter
         /// </summary>
         /// <param name="sourcePageType">Type of source page</param>
         /// <returns>Void task</returns>
@@ -109,8 +125,6 @@ namespace Touch.Services
             await DispatcherHelper.ExecuteOnUIThreadAsync(() => { _navFrame.Navigate(sourcePageType, parameter); });
         }
 
-        #endregion
-
         #region Page with ViewModel Navigation
 
         /// <summary>
@@ -122,8 +136,9 @@ namespace Touch.Services
         {
             _pageDelegateDict[typeof(TPage)] = page =>
             {
-                if (page is IPageWithViewModel<TViewModel> pageWithVm)
-                    pageWithVm.ViewModel = _iocResolver.Resolve<TViewModel>();
+                if (!(page is IPageWithViewModel<TViewModel> pageWithVm)) return;
+                pageWithVm.ViewModel = _iocResolver.Resolve<TViewModel>();
+                pageWithVm.UpdateBindings();
             };
         }
 
