@@ -9,12 +9,12 @@
     Loaded="NavRootPage_OnLoaded">
 
     <Grid>
-        <NavigationView x:Name="NavView" AlwaysShowHeader="False" IsSettingsVisible="True"
+        <NavigationView x:Name="NavView" AlwaysShowHeader="False" ExpandedModeThresholdWidth="9999"
                         ItemInvoked="NavView_OnItemInvoked" BackRequested="NavView_OnBackRequested">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Gallery">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE138;" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB9F;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

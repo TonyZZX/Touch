@@ -12,12 +12,30 @@
     Loaded="GallerySearchPage_OnLoadedAsync">
 
     <Grid>
-        <controls:AdaptiveGridView MinItemHeight="300" MinItemWidth="400"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <TextBlock x:Name="TitleText" Style="{StaticResource PageTitleStyle}" />
+                    <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed"/>
+                </Grid>
+                <ProgressBar Margin="0,10,0,0" HorizontalAlignment="Stretch" Background="Transparent" />
+            </StackPanel>
+        </Grid>
+
+        <controls:AdaptiveGridView Grid.Row="1" Padding="144,0,144,0" MinItemHeight="180" MinItemWidth="240"
                                    animations:ReorderGridAnimation.Duration="250"
                                    ItemsSource="{x:Bind _viewModel.Images, Mode=OneWay}">
             <controls:AdaptiveGridView.ItemTemplate>
                 <DataTemplate x:DataType="models:ThumbnailImage">
-                    <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                    <Grid PointerEntered="GridViewItem_PointerEntered" PointerExited="GridViewItem_PointerExited"
+                          SizeChanged="GridViewItem_SizeChanged">
+                        <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                    </Grid>
                 </DataTemplate>
             </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>

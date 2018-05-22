@@ -3,6 +3,9 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 using Autofac;
@@ -69,6 +72,8 @@ namespace Touch
             Window.Current.Content = rootPage;
             // Ensure the current window is active
             Window.Current.Activate();
+
+            // SetTitlebar();
         }
 
         /// <summary>
@@ -93,6 +98,21 @@ namespace Touch
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        /// <summary>
+        ///     Set up transparent TitleBar
+        /// </summary>
+        private static void SetTitlebar()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = Colors.Black;
+            titleBar.ForegroundColor = Colors.Black;
+            titleBar.BackgroundColor = Colors.Black;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
         }
     }
 }
