@@ -22,7 +22,7 @@ namespace Touch.Helpers
         /// </summary>
         /// <param name="streamContent">Image file stream</param>
         /// <returns>Multi-Label of the iamge</returns>
-        public static async Task<IList<Label>> GetLabelsOnMgmlAsync(HttpStreamContent streamContent)
+        public static async Task<IEnumerable<Label>> GetLabelsOnMgmlAsync(HttpStreamContent streamContent)
         {
             using (var httpClient = new HttpClient())
             {
@@ -32,8 +32,8 @@ namespace Touch.Helpers
                 {
                     var content = await httpResponse.Content.ReadAsStringAsync();
                     var trueContent = string.Join("", content.Split('\r', '\n').Skip(2));
-                    var labels = JsonConvert.DeserializeObject<List<List<int>>>(trueContent)
-                        .ConvertAll(intList => intList.ConvertAll(num => new Label {Index = num}));
+                    var labels = JsonConvert.DeserializeObject<IEnumerable<IEnumerable<int>>>(trueContent)
+                        .Select(intList => intList.Select(num => new Label {Index = num}));
                     return labels.First();
                 }
             }

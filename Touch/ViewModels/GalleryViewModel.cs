@@ -2,14 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Http;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +34,11 @@ namespace Touch.ViewModels
         private readonly INavigationService _navigationService;
 
         /// <summary>
+        ///     Group on date
+        /// </summary>
+        private IEnumerable<ImageGroup> _imageGroup;
+
+        /// <summary>
         ///     Max value of ProgressBar
         /// </summary>
         private double _maxValue;
@@ -49,15 +52,18 @@ namespace Touch.ViewModels
         {
             _navigationService = navigationService;
             _category = new Category();
-            Images = new ObservableCollection<ThumbnailImage>();
             MaxValue = 1;
             Progress = 0;
         }
 
         /// <summary>
-        ///     Image list of all folders
+        ///     Group on date
         /// </summary>
-        public ObservableCollection<ThumbnailImage> Images { get; }
+        public IEnumerable<ImageGroup> ImageGroup
+        {
+            get => _imageGroup;
+            private set => SetProperty(ref _imageGroup, value);
+        }
 
         /// <summary>
         ///     Max value of ProgressBar
@@ -91,7 +97,7 @@ namespace Touch.ViewModels
                     // Load new images from folders
                     var queryOptions = new QueryOptions(CommonFileQuery.OrderByName,
                         new List<string> {".jpg", ".jpeg", ".png", ".bmp"});
-                    var newImages = new HashSet<ThumbnailImage>();
+                    var newImageSet = new HashSet<ThumbnailImage>();
                     var folders = db.Folders.ToList();
                     foreach (var folder in folders)
                     {
@@ -112,7 +118,7 @@ namespace Touch.ViewModels
                                     ? basicProperties.DateModified
                                     : imageProperties.DateTaken
                             };
-                            if (newImages.Contains(newImage)) continue;
+                            if (newImageSet.Contains(newImage)) continue;
                             // TODO: Use local cache
                             using (var thumbnail =
                                 await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 240))
@@ -120,35 +126,32 @@ namespace Touch.ViewModels
                                 var bitmap = new BitmapImage();
                                 bitmap.SetSource(thumbnail);
                                 newImage.Thumbnail = bitmap;
-                                newImages.Add(newImage);
-                                Images.Add(newImage);
+                                newImageSet.Add(newImage);
                             }
                         }
                     }
-                }
-            });
-            // Save new/deleted images to database
-            await Window.Current.Dispatcher.RunIdleAsync(args =>
-            {
-                using (var db = new Database())
-                {
+
+                    var images = newImageSet.ToList();
+                    ImageGroup = images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));
+
+                    // Save new/deleted images to database
                     // Load old images from database
                     var oldImages = db.Images.Include(image => image.Labels).ToList();
 
-                    var intersect = oldImages.Intersect(Images).ToList();
+                    var intersect = oldImages.Intersect(images).ToList();
                     // Delete unexisted images in database
                     var deletedImages = oldImages.Except(intersect).ToList();
-                    if (deletedImages.Count > 0)
+                    if (deletedImages.Any())
                     {
                         db.RemoveRange(deletedImages);
                         db.SaveChanges();
                     }
 
                     // Add new images to database
-                    var addImages = Images.ToList().ConvertAll(thumbnail => thumbnail.ConvertToImage())
-                        .Except(intersect).ToList();
+                    var addImages = images.ConvertAll(thumbnail => thumbnail.ConvertToImage()).Except(intersect)
+                        .ToList();
                     // ReSharper disable once InvertIf
-                    if (addImages.Count > 0)
+                    if (addImages.Any())
                     {
                         db.AddRange(addImages);
                         db.SaveChanges();
@@ -162,7 +165,7 @@ namespace Touch.ViewModels
         /// </summary>
         /// <param name="query">Query text</param>
         /// <returns>Suggestion texts</returns>
-        public IList<string> GetSuggestions(string query)
+        public IEnumerable<string> GetSuggestions(string query)
         {
             return _category.GetMatchList(query);
         }
@@ -197,7 +200,7 @@ namespace Touch.ViewModels
                 using (var db = new Database())
                 {
                     var allImages = db.Images.Include(image => image.Labels).ToList();
-                    var unlabeledImages = allImages.Where(image => image.Labels?.Count <= 0).ToList();
+                    var unlabeledImages = allImages.Where(image => image.Labels?.Count() <= 0).ToList();
                     var folders = db.Folders.ToList();
                     if (unlabeledImages.Count >= 0)
                     {
@@ -211,7 +214,8 @@ namespace Touch.ViewModels
                                 // TODO: Upload in low size
                                 var streamContent = new HttpStreamContent(fileStream);
                                 // Upload image to predict labels
-                                image.Labels = await ClassificationHelper.GetLabelsOnMgmlAsync(streamContent);
+                                image.Labels = (await ClassificationHelper.GetLabelsOnMgmlAsync(streamContent))
+                                    .ToList();
                                 db.Images.Update(image);
                                 db.SaveChanges();
                             }

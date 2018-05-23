@@ -47,6 +47,6 @@
             </StackPanel>
         </Grid>
 
-        <controls:GridViewControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}" />
+        <controls:SemanticZoomControl Grid.Row="1" Source="{x:Bind ViewModel.ImageGroup, Mode=OneWay}" />
     </Grid>
 </Page>

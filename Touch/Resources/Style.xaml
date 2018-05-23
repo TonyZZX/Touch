@@ -4,6 +4,8 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:Touch.Views.Controls">
 
+    <Thickness x:Key="GridViewMargin">96,24,96,0</Thickness>
+
     <Style x:Key="PageTitleStyle" TargetType="TextBlock">
         <Setter Property="Margin" Value="36,0,0,0" />
         <Setter Property="FontSize" Value="32" />
@@ -22,7 +24,7 @@
     </Style>
 
     <Style x:Key="AdaptiveGridViewStyle" TargetType="controls:AdaptiveGridView">
-        <Setter Property="Padding" Value="96,24,96,0" />
+        <Setter Property="Margin" Value="{StaticResource GridViewMargin}" />
         <Setter Property="MinItemHeight" Value="180" />
         <Setter Property="SelectionMode" Value="None" />
         <Setter Property="IsItemClickEnabled" Value="True" />

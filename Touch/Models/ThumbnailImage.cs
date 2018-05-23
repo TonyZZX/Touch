@@ -1,7 +1,7 @@
 #region
 
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using Windows.Globalization.DateTimeFormatting;
 using Windows.UI.Xaml.Media.Imaging;
 
 #endregion
@@ -31,10 +31,11 @@ namespace Touch.Models
             Labels = image.Labels;
         }
 
+        public string MonthYear => new DateTimeFormatter("month year").Format(Date);
+
         /// <summary>
         ///     Image thumbnail
         /// </summary>
-        [NotMapped]
         public BitmapImage Thumbnail { get; set; }
 
         public bool Equals(ThumbnailImage other)

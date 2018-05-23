@@ -47,10 +47,10 @@ namespace Touch.Models
         /// </summary>
         /// <param name="query">Label text</param>
         /// <returns>Matched list</returns>
-        public IList<string> GetMatchList(string query)
+        public IEnumerable<string> GetMatchList(string query)
         {
             return _data.Where(item => item.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0)
-                .OrderBy(s => s).ToList();
+                .OrderBy(s => s);
         }
 
         /// <summary>

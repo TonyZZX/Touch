@@ -1,5 +1,6 @@
 #region
 
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,8 +40,8 @@ namespace Touch.Views.Pages
             // otherwise we assume the value got filled in by TextMemberPath
             // or the handler for SuggestionChosen
             if (args.Reason != AutoSuggestionBoxTextChangeReason.UserInput) return;
-            var suggestions = ViewModel.GetSuggestions(sender.Text);
-            sender.ItemsSource = suggestions.Count > 0 ? suggestions : new[] {"No results"};
+            var suggestions = ViewModel.GetSuggestions(sender.Text).ToArray();
+            sender.ItemsSource = suggestions.Any() ? suggestions : new[] {"No results"};
         }
 
         private void AutoSuggestBox_OnSuggestionChosen(AutoSuggestBox sender,

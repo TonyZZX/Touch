@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -19,11 +20,12 @@ namespace Touch.Helpers
         /// <param name="filePath">File path</param>
         /// <param name="folders">folder list</param>
         /// <returns>StorageFile</returns>
-        public static async Task<StorageFile> GetFileAsync(string filePath, IList<Folder> folders)
+        public static async Task<StorageFile> GetFileAsync(string filePath, IEnumerable<Folder> folders)
         {
-            var folder = folders[0];
+            var folderList = folders.ToList();
+            var folder = folderList[0];
             var relativePath = folder.GetRelativePath(filePath);
-            foreach (var f in folders)
+            foreach (var f in folderList)
             {
                 folder = f;
                 relativePath = folder.GetRelativePath(filePath);

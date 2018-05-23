@@ -11,7 +11,7 @@ using Touch.Models;
 namespace Touch.Models.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20180523094304_Init")]
+    [Migration("20180523124633_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
@@ -16,12 +15,17 @@ using Touch.Models;
 
 namespace Touch.ViewModels
 {
-    internal class GallerySearchViewModel
+    internal class GallerySearchViewModel : NotificationHelper
     {
         /// <summary>
         ///     Index for the query label
         /// </summary>
         private readonly IList<int> _searchLabelIndex;
+
+        /// <summary>
+        ///     Group on date
+        /// </summary>
+        private IEnumerable<ImageGroup> _imageGroup;
 
         public GallerySearchViewModel(string queryStr)
         {
@@ -33,14 +37,16 @@ namespace Touch.ViewModels
                 if (index != -1)
                     _searchLabelIndex.Add(index);
             }
-
-            Images = new ObservableCollection<ThumbnailImage>();
         }
 
         /// <summary>
-        ///     Image list for search result
+        ///     Group on date
         /// </summary>
-        public ObservableCollection<ThumbnailImage> Images { get; }
+        public IEnumerable<ImageGroup> ImageGroup
+        {
+            get => _imageGroup;
+            private set => SetProperty(ref _imageGroup, value);
+        }
 
         /// <summary>
         ///     Load images based on query
@@ -48,9 +54,10 @@ namespace Touch.ViewModels
         /// <returns>Void Task</returns>
         public async Task LoadImagesAsync()
         {
-            if (_searchLabelIndex.Count <= 0) return;
+            if (!_searchLabelIndex.Any()) return;
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
+                var images = new List<ThumbnailImage>();
                 using (var db = new Database())
                 {
                     var allImages = db.Images.Include(image => image.Labels).ToList();
@@ -64,10 +71,12 @@ namespace Touch.ViewModels
                             var bitmap = new BitmapImage();
                             bitmap.SetSource(thumbnail);
                             var newImage = new ThumbnailImage(image) {Thumbnail = bitmap};
-                            Images.Add(newImage);
+                            images.Add(newImage);
                         }
                     }
                 }
+
+                ImageGroup = images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));
             });
         }
     }

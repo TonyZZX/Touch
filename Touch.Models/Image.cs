@@ -57,7 +57,7 @@ namespace Touch.Models
         /// </summary>
         /// <param name="index">Label index in category</param>
         /// <returns>If contains</returns>
-        public bool IfContainsLabel(IList<int> index)
+        public bool IfContainsLabel(IEnumerable<int> index)
         {
             return Labels != null && !index.Except(Labels.Select(label => label.Index)).Any();
         }
