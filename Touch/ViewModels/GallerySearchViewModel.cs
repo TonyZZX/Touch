@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,11 +21,18 @@ namespace Touch.ViewModels
         /// <summary>
         ///     Index for the query label
         /// </summary>
-        private readonly int _searchLabelIndex;
+        private readonly IList<int> _searchLabelIndex;
 
-        public GallerySearchViewModel(string query)
+        public GallerySearchViewModel(string queryStr)
         {
-            _searchLabelIndex = query != null ? new Category().Get(query) : -1;
+            _searchLabelIndex = new List<int>();
+            var labels = queryStr.Split(' ');
+            foreach (var label in labels)
+            {
+                var index = label != null ? new Category().Get(label) : -1;
+                if (index != -1)
+                    _searchLabelIndex.Add(index);
+            }
             Images = new ObservableCollection<ThumbnailImage>();
         }
 
@@ -39,7 +47,7 @@ namespace Touch.ViewModels
         /// <returns>Void Task</returns>
         public async Task LoadImagesAsync()
         {
-            if (_searchLabelIndex == -1) return;
+            if (_searchLabelIndex.Count <= 0) return;
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
                 using (var db = new Database())

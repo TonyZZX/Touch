@@ -24,6 +24,8 @@
     <Style x:Key="AdaptiveGridViewStyle" TargetType="controls:AdaptiveGridView">
         <Setter Property="Padding" Value="96,24,96,0" />
         <Setter Property="MinItemHeight" Value="180" />
+        <Setter Property="SelectionMode" Value="None" />
+        <Setter Property="IsItemClickEnabled" Value="True" />
         <Setter Property="animations:ReorderGridAnimation.Duration" Value="250" />
     </Style>
 

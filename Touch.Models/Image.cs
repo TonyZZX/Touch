@@ -50,6 +50,16 @@ namespace Touch.Models
             return Labels != null && Labels.Any(label => label.Index == index);
         }
 
+        /// <summary>
+        ///     If contains specific labels
+        /// </summary>
+        /// <param name="index">Label index in category</param>
+        /// <returns>If contains</returns>
+        public bool IfContainsLabel(IList<int> index)
+        {
+            return Labels != null && !index.Except(Labels.Select(label=>label.Index)).Any();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj is null) return false;
