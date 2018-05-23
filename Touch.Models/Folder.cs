@@ -24,12 +24,6 @@ namespace Touch.Models
         /// </summary>
         public string Token { get; set; }
 
-        /// <summary>
-        ///     Symbol used in list
-        /// </summary>
-        [NotMapped]
-        public string Symbol => "\uE8B7";
-
         public bool Equals(Folder other)
         {
             if (other is null) return false;

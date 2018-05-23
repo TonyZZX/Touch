@@ -29,9 +29,9 @@
             <StackPanel>
                 <StackPanel Margin="12,0,0,25">
                     <TextBlock Text="Sources" Style="{StaticResource SubtitleTextBlockStyle}" />
-                    <TextBlock Text="Here's a list of what we've found so far." Style="{StaticResource BodyTextStyle}" />
-
-                    <Button Content="Add Images" Click="AddFolderBtn_OnClickAsync" />
+                    <TextBlock Text="Include more folders in your collection" Style="{StaticResource BodyTextStyle}" />
+                    <Button Margin="0,8,0,0" Content="Add a folder" Click="AddFolderBtn_OnClickAsync" />
+                    <TextBlock Margin="0,8,0,0" Text="Here's a list of what we've found so far." Style="{StaticResource BodyTextStyle}" />
                     <ListView HorizontalAlignment="Left" SelectionMode="None" IsItemClickEnabled="True"
                               ItemsSource="{x:Bind _viewModel.Folders, Mode=OneWay}">
                         <ListView.ItemContainerStyle>
@@ -46,7 +46,7 @@
                                     <FontIcon x:Name="FontIcon" RelativePanel.AlignVerticalCenterWithPanel="True"
                                               RelativePanel.AlignLeftWithPanel="True"
                                               Margin="8" FontFamily="Segoe MDL2 Assets"
-                                              Glyph="{x:Bind Symbol, Mode=OneWay}" FontSize="24" />
+                                              Glyph="&#xE8B7;" FontSize="24" />
                                     <TextBlock RelativePanel.AlignVerticalCenterWithPanel="True"
                                                RelativePanel.RightOf="FontIcon" RelativePanel.LeftOf="DeleteButton"
                                                Margin="8" Text="{x:Bind Path, Mode=OneWay}" TextWrapping="Wrap" />

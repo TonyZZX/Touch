@@ -39,7 +39,7 @@ namespace Touch.Models
         /// <returns>Return index of label if exists, otherwise return -1</returns>
         public int Get(string label)
         {
-            return Array.FindIndex(_data, s => s == label);
+            return Array.FindIndex(_data, s => s.IndexOf(label, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         /// <summary>
