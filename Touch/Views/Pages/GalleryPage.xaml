@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Touch.Controls"
     xmlns:models="using:Touch.Models"
+    xmlns:controls="using:Touch.Views.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="GalleryPage_OnLoadedAsync">
@@ -42,26 +42,12 @@
                                     SuggestionChosen="AutoSuggestBox_OnSuggestionChosen"
                                     QuerySubmitted="AutoSuggestBox_OnQuerySubmitted" />
                 </Grid>
-                <ProgressBar Style="{StaticResource HeaderProgressBarStyle}" Maximum="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
+                <ProgressBar Style="{StaticResource HeaderProgressBarStyle}"
+                             Maximum="{x:Bind ViewModel.MaxValue, Mode=OneWay}"
+                             Value="{x:Bind ViewModel.Progress, Mode=OneWay}" />
             </StackPanel>
         </Grid>
 
-        <controls:AdaptiveGridView Grid.Row="1" Style="{StaticResource AdaptiveGridViewStyle}" MinItemWidth="240"
-                                   ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}">
-            <controls:AdaptiveGridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="Margin" Value="4" />
-                </Style>
-            </controls:AdaptiveGridView.ItemContainerStyle>
-
-            <controls:AdaptiveGridView.ItemTemplate>
-                <DataTemplate x:DataType="models:ThumbnailImage">
-                    <Grid PointerEntered="GridViewItem_PointerEntered" PointerExited="GridViewItem_PointerExited"
-                          SizeChanged="GridViewItem_SizeChanged">
-                        <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
-                    </Grid>
-                </DataTemplate>
-            </controls:AdaptiveGridView.ItemTemplate>
-        </controls:AdaptiveGridView>
+        <controls:GridViewControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.Images, Mode=OneWay}" />
     </Grid>
 </Page>

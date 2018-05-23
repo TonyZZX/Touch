@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 #endregion
 
-namespace Touch.Controls
+namespace Touch.Views.Controls
 {
     /// <summary>
     ///     Adaptive GridView based on width.

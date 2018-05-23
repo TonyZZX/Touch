@@ -31,7 +31,8 @@
                     <TextBlock Text="Sources" Style="{StaticResource SubtitleTextBlockStyle}" />
                     <TextBlock Text="Include more folders in your collection" Style="{StaticResource BodyTextStyle}" />
                     <Button Margin="0,8,0,0" Content="Add a folder" Click="AddFolderBtn_OnClickAsync" />
-                    <TextBlock Margin="0,8,0,0" Text="Here's a list of what we've found so far." Style="{StaticResource BodyTextStyle}" />
+                    <TextBlock Margin="0,8,0,0" Text="Here's a list of what we've found so far."
+                               Style="{StaticResource BodyTextStyle}" />
                     <ListView HorizontalAlignment="Left" SelectionMode="None" IsItemClickEnabled="True"
                               ItemsSource="{x:Bind _viewModel.Folders, Mode=OneWay}">
                         <ListView.ItemContainerStyle>
