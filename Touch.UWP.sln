@@ -1,11 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Touch", "Touch\Touch.csproj", "{C0E50466-9BB2-4C7C-965A-631D2B2EC839}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Touch.Models", "Touch.Models\Touch.Models.csproj", "{FBD43568-61B8-4D9B-B612-0B17AE490F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Touch.Models", "Touch.Models\Touch.Models.csproj", "{FBD43568-61B8-4D9B-B612-0B17AE490F37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Touch.UnitTest", "Touch.UnitTest\Touch.UnitTest.csproj", "{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +56,26 @@ Global
 		{FBD43568-61B8-4D9B-B612-0B17AE490F37}.Release|x64.Build.0 = Release|Any CPU
 		{FBD43568-61B8-4D9B-B612-0B17AE490F37}.Release|x86.ActiveCfg = Release|Any CPU
 		{FBD43568-61B8-4D9B-B612-0B17AE490F37}.Release|x86.Build.0 = Release|Any CPU
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|ARM.Build.0 = Debug|ARM
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|x64.ActiveCfg = Debug|x64
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|x64.Build.0 = Debug|x64
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|x64.Deploy.0 = Debug|x64
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|x86.ActiveCfg = Debug|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|x86.Build.0 = Debug|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Debug|x86.Deploy.0 = Debug|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|Any CPU.ActiveCfg = Release|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|ARM.ActiveCfg = Release|ARM
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|ARM.Build.0 = Release|ARM
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|ARM.Deploy.0 = Release|ARM
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|x64.ActiveCfg = Release|x64
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|x64.Build.0 = Release|x64
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|x64.Deploy.0 = Release|x64
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|x86.ActiveCfg = Release|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|x86.Build.0 = Release|x86
+		{29E37EF4-33E5-4DF8-92B5-B85AC5F2B30A}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

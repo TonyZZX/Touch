@@ -11,7 +11,7 @@ namespace Touch.Models
     /// <summary>
     ///     Group on image date
     /// </summary>
-    internal class ImageGroup : IGrouping<string, ThumbnailImage>
+    public class ImageGroup : IGrouping<string, ThumbnailImage>
     {
         private readonly IEnumerable<ThumbnailImage> _images;
 

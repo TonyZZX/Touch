@@ -11,7 +11,7 @@ namespace Touch.Models
     /// <summary>
     ///     Image thumbnail
     /// </summary>
-    internal class ThumbnailImage : Image, IEquatable<ThumbnailImage>
+    public class ThumbnailImage : Image, IEquatable<ThumbnailImage>
     {
         /// <summary>
         ///     Image thumbnail

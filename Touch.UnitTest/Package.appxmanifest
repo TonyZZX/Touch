@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity Name="5588515a-cf11-4b09-b7bb-19954f6a78cd" Publisher="CN=tonyz" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="5588515a-cf11-4b09-b7bb-19954f6a78cd" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Touch.UnitTest</DisplayName>
+    <PublisherDisplayName>tonyz</PublisherDisplayName>
+    <Logo>AssetsTest\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="vstest.executionengine.universal.App" Executable="$targetnametoken$.exe" EntryPoint="Touch.UnitTest.App">
+      <uap:VisualElements DisplayName="Touch.UnitTest" Square150x150Logo="AssetsTest\Square150x150Logo.png" Square44x44Logo="AssetsTest\Square44x44Logo.png" Description="Touch.UnitTest" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="AssetsTest\Wide310x150Logo.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="AssetsTest\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
+  </Capabilities>
+</Package>
