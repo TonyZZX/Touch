@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="Views\Controls\AdaptiveGridView.cs" />
     <Compile Include="Helpers\ClassificationHelper.cs" />
     <Compile Include="Helpers\NotificationHelper.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="Services\IPageWithViewModel.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\GallerySearchViewModel.cs" />
-    <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\Controls\GridViewControl.xaml.cs">
       <DependentUpon>GridViewControl.xaml</DependentUpon>

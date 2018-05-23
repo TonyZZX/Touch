@@ -102,11 +102,15 @@ namespace Touch.ViewModels
                         foreach (var storageFile in storageFiles)
                         {
                             var basicProperties = await storageFile.GetBasicPropertiesAsync();
+                            var imageProperties = await storageFile.Properties.GetImagePropertiesAsync();
                             var newImage = new ThumbnailImage
                             {
                                 Path = storageFile.Path,
                                 Size = basicProperties.Size,
-                                DateModified = basicProperties.DateModified
+                                // If the year in taken date is smaller than 1601, then there is no taken date.
+                                Date = imageProperties.DateTaken.Year <= 1601
+                                    ? basicProperties.DateModified
+                                    : imageProperties.DateTaken
                             };
                             if (newImages.Contains(newImage)) continue;
                             // TODO: Use local cache

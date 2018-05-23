@@ -27,7 +27,7 @@ namespace Touch.Models
         {
             Path = image.Path;
             Size = image.Size;
-            DateModified = image.DateModified;
+            Date = image.Date;
             Labels = image.Labels;
         }
 
@@ -48,7 +48,7 @@ namespace Touch.Models
         /// <returns>Image</returns>
         public Image ConvertToImage()
         {
-            return new Image {Path = Path, Size = Size, DateModified = DateModified, Labels = Labels};
+            return new Image {Path = Path, Size = Size, Date = Date, Labels = Labels};
         }
 
         public override int GetHashCode()

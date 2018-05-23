@@ -33,6 +33,7 @@ namespace Touch.ViewModels
                 if (index != -1)
                     _searchLabelIndex.Add(index);
             }
+
             Images = new ObservableCollection<ThumbnailImage>();
         }
 

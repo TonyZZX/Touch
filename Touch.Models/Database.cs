@@ -41,7 +41,7 @@ namespace Touch.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Image>().HasKey(image => new {image.Path, image.Size, image.DateModified});
+            modelBuilder.Entity<Image>().HasKey(image => new {image.Path, image.Size, image.Date});
         }
     }
 }

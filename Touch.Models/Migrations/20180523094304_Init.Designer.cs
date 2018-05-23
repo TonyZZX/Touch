@@ -11,7 +11,7 @@ using Touch.Models;
 namespace Touch.Models.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20180521104716_Init")]
+    [Migration("20180523094304_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,9 +38,9 @@ namespace Touch.Models.Migrations
 
                     b.Property<ulong>("Size");
 
-                    b.Property<DateTimeOffset>("DateModified");
+                    b.Property<DateTimeOffset>("Date");
 
-                    b.HasKey("Path", "Size", "DateModified");
+                    b.HasKey("Path", "Size", "Date");
 
                     b.ToTable("Images");
                 });
@@ -50,7 +50,7 @@ namespace Touch.Models.Migrations
                     b.Property<Guid>("LabelId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTimeOffset?>("ImageDateModified");
+                    b.Property<DateTimeOffset?>("ImageDate");
 
                     b.Property<string>("ImagePath");
 
@@ -60,7 +60,7 @@ namespace Touch.Models.Migrations
 
                     b.HasKey("LabelId");
 
-                    b.HasIndex("ImagePath", "ImageSize", "ImageDateModified");
+                    b.HasIndex("ImagePath", "ImageSize", "ImageDate");
 
                     b.ToTable("Labels");
                 });
@@ -69,7 +69,7 @@ namespace Touch.Models.Migrations
                 {
                     b.HasOne("Touch.Models.Image")
                         .WithMany("Labels")
-                        .HasForeignKey("ImagePath", "ImageSize", "ImageDateModified");
+                        .HasForeignKey("ImagePath", "ImageSize", "ImageDate");
                 });
 #pragma warning restore 612, 618
         }

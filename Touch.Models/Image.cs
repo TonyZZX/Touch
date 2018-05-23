@@ -24,9 +24,11 @@ namespace Touch.Models
         public ulong Size { get; set; }
 
         /// <summary>
-        ///     Last modified date
+        ///     Image date.
+        ///     Most time it is the date that photo was took. If the taken time is empty,
+        ///     it will be the date that file was last modified.
         /// </summary>
-        public DateTimeOffset DateModified { get; set; }
+        public DateTimeOffset Date { get; set; }
 
         /// <summary>
         ///     Multiple labels that image contains
@@ -37,7 +39,7 @@ namespace Touch.Models
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Path, other.Path) && Size == other.Size && DateModified.Equals(other.DateModified);
+            return string.Equals(Path, other.Path) && Size == other.Size && Date.Equals(other.Date);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Touch.Models
         /// <returns>If contains</returns>
         public bool IfContainsLabel(IList<int> index)
         {
-            return Labels != null && !index.Except(Labels.Select(label=>label.Index)).Any();
+            return Labels != null && !index.Except(Labels.Select(label => label.Index)).Any();
         }
 
         public override bool Equals(object obj)
@@ -74,7 +76,7 @@ namespace Touch.Models
             {
                 var hashCode = Path != null ? Path.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ Size.GetHashCode();
-                hashCode = (hashCode * 397) ^ DateModified.GetHashCode();
+                hashCode = (hashCode * 397) ^ Date.GetHashCode();
                 return hashCode;
             }
         }

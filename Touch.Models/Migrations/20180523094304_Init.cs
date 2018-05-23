@@ -26,16 +26,16 @@ namespace Touch.Models.Migrations
                 {
                     Path = table.Column<string>(nullable: false),
                     Size = table.Column<ulong>(nullable: false),
-                    DateModified = table.Column<DateTimeOffset>(nullable: false)
+                    Date = table.Column<DateTimeOffset>(nullable: false)
                 },
-                constraints: table => { table.PrimaryKey("PK_Images", x => new {x.Path, x.Size, x.DateModified}); });
+                constraints: table => { table.PrimaryKey("PK_Images", x => new {x.Path, x.Size, x.Date}); });
 
             migrationBuilder.CreateTable(
                 "Labels",
                 table => new
                 {
                     LabelId = table.Column<Guid>(nullable: false),
-                    ImageDateModified = table.Column<DateTimeOffset>(nullable: true),
+                    ImageDate = table.Column<DateTimeOffset>(nullable: true),
                     ImagePath = table.Column<string>(nullable: true),
                     ImageSize = table.Column<ulong>(nullable: true),
                     Index = table.Column<int>(nullable: false)
@@ -44,17 +44,17 @@ namespace Touch.Models.Migrations
                 {
                     table.PrimaryKey("PK_Labels", x => x.LabelId);
                     table.ForeignKey(
-                        "FK_Labels_Images_ImagePath_ImageSize_ImageDateModified",
-                        x => new {x.ImagePath, x.ImageSize, x.ImageDateModified},
+                        "FK_Labels_Images_ImagePath_ImageSize_ImageDate",
+                        x => new {x.ImagePath, x.ImageSize, x.ImageDate},
                         "Images",
-                        new[] {"Path", "Size", "DateModified"},
+                        new[] {"Path", "Size", "Date"},
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                "IX_Labels_ImagePath_ImageSize_ImageDateModified",
+                "IX_Labels_ImagePath_ImageSize_ImageDate",
                 "Labels",
-                new[] {"ImagePath", "ImageSize", "ImageDateModified"});
+                new[] {"ImagePath", "ImageSize", "ImageDate"});
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
