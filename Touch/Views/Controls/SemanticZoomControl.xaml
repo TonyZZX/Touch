@@ -74,7 +74,7 @@
         </SemanticZoom.ZoomedInView>
 
         <SemanticZoom.ZoomedOutView>
-            <ListView Margin="{StaticResource GridViewMargin}" SelectionMode="None"
+            <ListView Margin="{StaticResource GridViewPadding}" SelectionMode="None"
                       ItemsSource="{x:Bind Cvs.View.CollectionGroups, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="ICollectionViewGroup">
