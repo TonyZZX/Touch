@@ -202,27 +202,25 @@ namespace Touch.ViewModels
                     var allImages = db.Images.Include(image => image.Labels).ToList();
                     var unlabeledImages = allImages.Where(image => image.Labels?.Count() <= 0).ToList();
                     var folders = db.Folders.ToList();
-                    if (unlabeledImages.Count >= 0)
-                    {
-                        MaxValue = unlabeledImages.Count + 1;
-                        foreach (var image in unlabeledImages)
-                        {
-                            Progress++;
-                            var storageFile = await Utils.GetFileAsync(image.Path, folders);
-                            using (var fileStream = await storageFile.OpenAsync(FileAccessMode.Read))
-                            {
-                                // TODO: Upload in low size
-                                var streamContent = new HttpStreamContent(fileStream);
-                                // Upload image to predict labels
-                                image.Labels = (await ClassificationHelper.GetLabelsOnMgmlAsync(streamContent))
-                                    .ToList();
-                                db.Images.Update(image);
-                                db.SaveChanges();
-                            }
-                        }
 
+                    MaxValue = unlabeledImages.Count + 1;
+                    foreach (var image in unlabeledImages)
+                    {
                         Progress++;
+                        var storageFile = await Utils.GetFileAsync(image.Path, folders);
+                        using (var fileStream = await storageFile.OpenAsync(FileAccessMode.Read))
+                        {
+                            // TODO: Upload in low size
+                            var streamContent = new HttpStreamContent(fileStream);
+                            // Upload image to predict labels
+                            image.Labels = (await ClassificationHelper.GetLabelsOnMgmlAsync(streamContent))
+                                .ToList();
+                            db.Images.Update(image);
+                            db.SaveChanges();
+                        }
                     }
+
+                    Progress++;
                 }
             });
         }
