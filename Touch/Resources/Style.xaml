@@ -4,7 +4,11 @@
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:controls="using:Touch.Views.Controls">
 
-    <Thickness x:Key="GridViewPadding">96,24,96,0</Thickness>
+    <Thickness x:Key="GalleryGridViewPadding">96,24,96,0</Thickness>
+
+    <x:Double x:Key="GalleryItemWidth">320</x:Double>
+
+    <x:Double x:Key="GridItemWidth">360</x:Double>
 
     <Style x:Key="PageTitleStyle" TargetType="TextBlock">
         <Setter Property="Margin" Value="36,0,0,0" />
@@ -23,9 +27,16 @@
         <Setter Property="Background" Value="Transparent" />
     </Style>
 
-    <Style x:Key="AdaptiveGridViewStyle" TargetType="controls:AdaptiveGridView">
-        <Setter Property="Padding" Value="{StaticResource GridViewPadding}" />
-        <Setter Property="MinItemHeight" Value="180" />
+    <Style x:Key="GalleryGridViewStyle" TargetType="controls:AdaptiveGridView">
+        <Setter Property="Padding" Value="{StaticResource GalleryGridViewPadding}" />
+        <Setter Property="MinItemHeight" Value="240" />
+        <Setter Property="SelectionMode" Value="None" />
+        <Setter Property="IsItemClickEnabled" Value="True" />
+        <Setter Property="animations:ReorderGridAnimation.Duration" Value="250" />
+    </Style>
+
+    <Style x:Key="GridViewStyle" TargetType="controls:AdaptiveGridView">
+        <Setter Property="MinItemHeight" Value="270" />
         <Setter Property="SelectionMode" Value="None" />
         <Setter Property="IsItemClickEnabled" Value="True" />
         <Setter Property="animations:ReorderGridAnimation.Duration" Value="250" />

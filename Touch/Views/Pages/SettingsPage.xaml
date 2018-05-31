@@ -43,7 +43,7 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:Folder">
-                                <RelativePanel Width="320">
+                                <RelativePanel Width="400">
                                     <FontIcon x:Name="FontIcon" RelativePanel.AlignVerticalCenterWithPanel="True"
                                               RelativePanel.AlignLeftWithPanel="True"
                                               Margin="8" FontFamily="Segoe MDL2 Assets"

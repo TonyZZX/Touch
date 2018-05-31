@@ -10,19 +10,33 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <local:AdaptiveGridView Style="{StaticResource AdaptiveGridViewStyle}" MinItemWidth="240"
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <AcrylicBrush x:Key="AcrylicElementBrush" BackgroundSource="Backdrop" TintOpacity="0.2" TintColor="White"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <local:AdaptiveGridView Style="{StaticResource GridViewStyle}" MinItemWidth="{StaticResource GridItemWidth}"
                             ItemsSource="{x:Bind ItemsSource, Mode=OneWay}">
         <local:AdaptiveGridView.ItemContainerStyle>
             <Style TargetType="GridViewItem">
-                <Setter Property="Margin" Value="4" />
+                <Setter Property="Margin" Value="1" />
             </Style>
         </local:AdaptiveGridView.ItemContainerStyle>
 
         <local:AdaptiveGridView.ItemTemplate>
-            <DataTemplate x:DataType="models:ThumbnailImage">
+            <DataTemplate x:DataType="models:CategoryObject">
                 <Grid PointerEntered="GridViewItem_PointerEntered" PointerExited="GridViewItem_PointerExited"
-                      SizeChanged="GridViewItem_SizeChanged">
-                    <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                      Loaded="GridViewItem_OnLoaded" SizeChanged="GridViewItem_SizeChanged">
+                    <Image VerticalAlignment="Center" Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                    <Rectangle Fill="{ThemeResource AcrylicElementBrush}"/>
+                    <Rectangle Fill="#20000000"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}"
+                               Text="{x:Bind Name, Mode=OneWay}" Foreground="White" FontWeight="Bold"/>
                 </Grid>
             </DataTemplate>
         </local:AdaptiveGridView.ItemTemplate>

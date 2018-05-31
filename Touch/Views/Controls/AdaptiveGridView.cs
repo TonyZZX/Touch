@@ -4,6 +4,7 @@ using System;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Touch.Helpers;
 
 #endregion
 
@@ -16,8 +17,6 @@ namespace Touch.Views.Controls
     /// </summary>
     public class AdaptiveGridView : GridView
     {
-        private const float Tolerance = 0.1f;
-
         public AdaptiveGridView()
         {
             if (ItemContainerStyle == null)
@@ -36,13 +35,13 @@ namespace Touch.Views.Controls
         {
             if (!(ItemsPanelRoot is ItemsWrapGrid panel))
                 return base.MeasureOverride(availableSize);
-            if (Math.Abs(MinItemWidth) < Tolerance)
+            if (Math.Abs(MinItemWidth) < Utils.Tolerance)
                 throw new DivideByZeroException("You need to have a MinItemWidth greater than zero");
 
             var availableWidth = availableSize.Width - (Padding.Right + Padding.Left);
 
             var numColumns = Math.Floor(availableWidth / MinItemWidth);
-            numColumns = Math.Abs(numColumns) < Tolerance ? 1 : numColumns;
+            numColumns = Math.Abs(numColumns) < Utils.Tolerance ? 1 : numColumns;
             if (Items != null)
             {
                 // ReSharper disable once UnusedVariable

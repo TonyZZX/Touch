@@ -15,6 +15,11 @@ namespace Touch.Helpers
     internal class Utils
     {
         /// <summary>
+        ///     Tolerance for float number difference
+        /// </summary>
+        public const float Tolerance = 0.01f;
+
+        /// <summary>
         ///     Get <see cref="StorageFile" /> with file path from folder list.
         /// </summary>
         /// <param name="filePath">File path</param>

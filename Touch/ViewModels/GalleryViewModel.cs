@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Web.Http;
 using Microsoft.EntityFrameworkCore;
@@ -99,37 +100,40 @@ namespace Touch.ViewModels
                         new List<string> {".jpg", ".jpeg", ".png", ".bmp"});
                     var newImageSet = new HashSet<ThumbnailImage>();
                     var folders = db.Folders.ToList();
-                    foreach (var folder in folders)
-                    {
-                        var storageFolder =
-                            await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(folder.Token);
-                        var storageFiles =
-                            await storageFolder.CreateFileQueryWithOptions(queryOptions).GetFilesAsync();
-                        foreach (var storageFile in storageFiles)
+                    var galleryItemWidth = Application.Current.Resources["GalleryItemWidth"] as double?;
+                    if (galleryItemWidth != null)
+                        foreach (var folder in folders)
                         {
-                            var basicProperties = await storageFile.GetBasicPropertiesAsync();
-                            var imageProperties = await storageFile.Properties.GetImagePropertiesAsync();
-                            var newImage = new ThumbnailImage
+                            var storageFolder =
+                                await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(folder.Token);
+                            var storageFiles =
+                                await storageFolder.CreateFileQueryWithOptions(queryOptions).GetFilesAsync();
+                            foreach (var storageFile in storageFiles)
                             {
-                                Path = storageFile.Path,
-                                Size = basicProperties.Size,
-                                // If the year in taken date is smaller than 1601, then there is no taken date.
-                                Date = imageProperties.DateTaken.Year <= 1601
-                                    ? basicProperties.DateModified
-                                    : imageProperties.DateTaken
-                            };
-                            if (newImageSet.Contains(newImage)) continue;
-                            // TODO: Use local cache
-                            using (var thumbnail =
-                                await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 240))
-                            {
-                                var bitmap = new BitmapImage();
-                                bitmap.SetSource(thumbnail);
-                                newImage.Thumbnail = bitmap;
-                                newImageSet.Add(newImage);
+                                var basicProperties = await storageFile.GetBasicPropertiesAsync();
+                                var imageProperties = await storageFile.Properties.GetImagePropertiesAsync();
+                                var newImage = new ThumbnailImage
+                                {
+                                    Path = storageFile.Path,
+                                    Size = basicProperties.Size,
+                                    // If the year in taken date is smaller than 1601, then there is no taken date.
+                                    Date = imageProperties.DateTaken.Year <= 1601
+                                        ? basicProperties.DateModified
+                                        : imageProperties.DateTaken
+                                };
+                                if (newImageSet.Contains(newImage)) continue;
+                                // TODO: Use local cache
+                                using (var thumbnail =
+                                    await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem,
+                                        (uint) galleryItemWidth))
+                                {
+                                    var bitmap = new BitmapImage();
+                                    bitmap.SetSource(thumbnail);
+                                    newImage.Thumbnail = bitmap;
+                                    newImageSet.Add(newImage);
+                                }
                             }
                         }
-                    }
 
                     var images = newImageSet.ToList();
                     ImageGroup = images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));
@@ -195,12 +199,14 @@ namespace Touch.ViewModels
         /// <returns>Void Task</returns>
         public async Task UploadImagesAsync()
         {
+            MaxValue = 1;
+            Progress = 0;
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
                 using (var db = new Database())
                 {
                     var allImages = db.Images.Include(image => image.Labels).ToList();
-                    var unlabeledImages = allImages.Where(image => image.Labels?.Count() <= 0).ToList();
+                    var unlabeledImages = allImages.Where(image => image.Labels?.Count <= 0).ToList();
                     var folders = db.Folders.ToList();
 
                     MaxValue = unlabeledImages.Count + 1;

@@ -30,6 +30,8 @@ namespace Touch.Helpers
                 using (var httpResponse =
                     await httpClient.PostAsync(new Uri("http://59.110.137.131:1696"), streamContent))
                 {
+                    // TODO: network error exception
+                    if (httpResponse.StatusCode != HttpStatusCode.Ok) return new List<Label>();
                     var content = await httpResponse.Content.ReadAsStringAsync();
                     var trueContent = string.Join("", content.Split('\r', '\n').Skip(2));
                     var labels = JsonConvert.DeserializeObject<IEnumerable<IEnumerable<int>>>(trueContent)

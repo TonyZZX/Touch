@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -63,17 +64,20 @@ namespace Touch.ViewModels
                     var allImages = db.Images.Include(image => image.Labels).ToList();
                     var selectedImages = allImages.Where(image => image.IfContainsLabel(_searchLabelIndex)).ToList();
                     var folders = db.Folders.ToList();
-                    foreach (var image in selectedImages)
-                    {
-                        var storageFile = await Utils.GetFileAsync(image.Path, folders);
-                        using (var thumbnail = await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 240))
+                    var galleryItemWidth = Application.Current.Resources["GalleryItemWidth"] as double?;
+                    if (galleryItemWidth != null)
+                        foreach (var image in selectedImages)
                         {
-                            var bitmap = new BitmapImage();
-                            bitmap.SetSource(thumbnail);
-                            var newImage = new ThumbnailImage(image) {Thumbnail = bitmap};
-                            images.Add(newImage);
+                            var storageFile = await Utils.GetFileAsync(image.Path, folders);
+                            using (var thumbnail =
+                                await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, (uint) galleryItemWidth))
+                            {
+                                var bitmap = new BitmapImage();
+                                bitmap.SetSource(thumbnail);
+                                var newImage = new ThumbnailImage(image) {Thumbnail = bitmap};
+                                images.Add(newImage);
+                            }
                         }
-                    }
                 }
 
                 ImageGroup = images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));

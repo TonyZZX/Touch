@@ -96,8 +96,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryObject.cs" />
     <Compile Include="Models\ImageGroup.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\ObjectsViewModel.cs" />
     <Compile Include="Views\Controls\AdaptiveGridView.cs" />
     <Compile Include="Helpers\ClassificationHelper.cs" />
     <Compile Include="Helpers\NotificationHelper.cs" />
@@ -124,6 +126,9 @@
     <Compile Include="Views\Pages\NavRootPage.xaml.cs">
       <DependentUpon>NavRootPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\ObjectsPage.xaml.cs">
+      <DependentUpon>ObjectsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -132,9 +137,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
     <None Include="Touch_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\NavRootPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ObjectsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

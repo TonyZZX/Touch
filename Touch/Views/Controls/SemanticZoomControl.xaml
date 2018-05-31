@@ -17,11 +17,12 @@
             <CollectionViewSource x:Name="Cvs" IsSourceGrouped="True" Source="{x:Bind Source, Mode=OneWay}" />
         </SemanticZoom.Resources>
         <SemanticZoom.ZoomedInView>
-            <local:AdaptiveGridView Style="{StaticResource AdaptiveGridViewStyle}" MinItemWidth="240"
+            <local:AdaptiveGridView Style="{StaticResource GalleryGridViewStyle}"
+                                    MinItemWidth="{StaticResource GalleryItemWidth}"
                                     ItemsSource="{x:Bind Cvs.View, Mode=OneWay}">
                 <local:AdaptiveGridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
-                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="Margin" Value="2" />
                     </Style>
                 </local:AdaptiveGridView.ItemContainerStyle>
 
@@ -66,7 +67,7 @@
                     <DataTemplate x:DataType="models:ThumbnailImage">
                         <Grid PointerEntered="GridViewItem_PointerEntered" PointerExited="GridViewItem_PointerExited"
                               SizeChanged="GridViewItem_SizeChanged">
-                            <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                            <Image VerticalAlignment="Center" Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
                         </Grid>
                     </DataTemplate>
                 </local:AdaptiveGridView.ItemTemplate>
@@ -74,7 +75,7 @@
         </SemanticZoom.ZoomedInView>
 
         <SemanticZoom.ZoomedOutView>
-            <ListView Margin="{StaticResource GridViewPadding}" SelectionMode="None"
+            <ListView Margin="{StaticResource GalleryGridViewPadding}" SelectionMode="None"
                       ItemsSource="{x:Bind Cvs.View.CollectionGroups, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="ICollectionViewGroup">

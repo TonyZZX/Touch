@@ -36,7 +36,7 @@
                     </CommandBar>
 
                     <AutoSuggestBox HorizontalAlignment="Right" Margin="0,12,126,0" PlaceholderText="Search"
-                                    QueryIcon="Find" Width="200"
+                                    QueryIcon="Find" Width="400"
                                     TextChanged="AutoSuggestBox_OnTextChanged"
                                     SuggestionChosen="AutoSuggestBox_OnSuggestionChosen"
                                     QuerySubmitted="AutoSuggestBox_OnQuerySubmitted" />
