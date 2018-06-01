@@ -49,6 +49,7 @@ namespace Touch.Services
             // so that we don't have a hard dependency on the page types for multiplatform
             _pageDelegateDict = new Dictionary<Type, NavigatedToViewModelDelegate>();
             RegisterPageViewModel<GalleryPage, GalleryViewModel>();
+            RegisterPageViewModel<ObjectsPage, ObjectsViewModel>();
         }
 
         /// <summary>

@@ -10,15 +10,14 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Touch.Helpers;
 
 #endregion
 
 namespace Touch.Views.Controls
 {
-    internal sealed partial class GridViewControl
+    internal sealed partial class GalleryGridViewControl
     {
-        public GridViewControl()
+        public GalleryGridViewControl()
         {
             InitializeComponent();
         }
@@ -29,27 +28,16 @@ namespace Touch.Views.Controls
         {
             if (!(sender is Grid rootGrid))
                 return;
-            var img = rootGrid.Children[0];
-            var maskBorder = rootGrid.Children[1] as FrameworkElement;
-            ToggleItemPointAnimation(maskBorder, img, true);
+            var img = rootGrid.Children[0] as FrameworkElement;
+            ToggleItemPointAnimation(img, true);
         }
 
         private void GridViewItem_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             if (!(sender is Grid rootGrid))
                 return;
-            var img = rootGrid.Children[0];
-            var maskBorder = rootGrid.Children[1] as FrameworkElement;
-            ToggleItemPointAnimation(maskBorder, img, false);
-        }
-
-        private void GridViewItem_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (!(sender is Grid rootGrid))
-                return;
-            var maskBorder = rootGrid.Children[1] as FrameworkElement;
-            var maskVisual = ElementCompositionPreview.GetElementVisual(maskBorder);
-            maskVisual.Opacity = 0f;
+            var img = rootGrid.Children[0] as FrameworkElement;
+            ToggleItemPointAnimation(img, false);
         }
 
         private void GridViewItem_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -61,30 +49,13 @@ namespace Touch.Views.Controls
                 };
         }
 
-        private void ToggleItemPointAnimation(FrameworkElement mask, UIElement img, bool show)
+        private void ToggleItemPointAnimation(FrameworkElement img, bool show)
         {
-            var maskVisual = ElementCompositionPreview.GetElementVisual(mask);
             var imgVisual = ElementCompositionPreview.GetElementVisual(img);
-
-            var fadeAnimation = CreateFadeAnimation(show);
             var scaleAnimation = CreateScaleAnimation(show);
-
-            if (Math.Abs(imgVisual.CenterPoint.X) < Utils.Tolerance &&
-                Math.Abs(imgVisual.CenterPoint.Y) < Utils.Tolerance)
-                imgVisual.CenterPoint = new Vector3((float) mask.ActualWidth / 2, (float) mask.ActualHeight / 2, 0f);
-
-            maskVisual.StartAnimation("Opacity", fadeAnimation);
+            imgVisual.CenterPoint = new Vector3((float) img.ActualWidth / 2, (float) img.ActualHeight / 2, 0f);
             imgVisual.StartAnimation("Scale.x", scaleAnimation);
             imgVisual.StartAnimation("Scale.y", scaleAnimation);
-        }
-
-        private ScalarKeyFrameAnimation CreateFadeAnimation(bool show)
-        {
-            var compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
-            var fadeAnimation = compositor.CreateScalarKeyFrameAnimation();
-            fadeAnimation.InsertKeyFrame(1f, show ? 1f : 0f);
-            fadeAnimation.Duration = TimeSpan.FromMilliseconds(1000);
-            return fadeAnimation;
         }
 
         private ScalarKeyFrameAnimation CreateScaleAnimation(bool show)
@@ -111,7 +82,7 @@ namespace Touch.Views.Controls
             DependencyProperty.Register(
                 "ItemsSource",
                 typeof(IEnumerable),
-                typeof(GridViewControl),
+                typeof(SemanticZoomControl),
                 new PropertyMetadata(null));
 
         #endregion

@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Touch.Helpers;
 using Touch.Models;
+using Touch.Services;
+using Touch.Views.Pages;
 
 #endregion
 
@@ -18,14 +20,17 @@ namespace Touch.ViewModels
 {
     internal class ObjectsViewModel
     {
+        private readonly INavigationService _navigationService;
+
         /// <summary>
         ///     Object list
         /// </summary>
-        public ObservableCollection<CategoryObject> CategoryObjects;
+        public ObservableCollection<LabelObject> LabelObjects;
 
-        public ObjectsViewModel()
+        public ObjectsViewModel(INavigationService navigationService)
         {
-            CategoryObjects = new ObservableCollection<CategoryObject>();
+            _navigationService = navigationService;
+            LabelObjects = new ObservableCollection<LabelObject>();
         }
 
         /// <summary>
@@ -40,7 +45,7 @@ namespace Touch.ViewModels
                 {
                     var distinctLabels = db.Labels.Select(label => label.Index).ToHashSet();
 
-                    var gridItemWidth = Application.Current.Resources["GridItemWidth"] as double?;
+                    var gridItemWidth = Application.Current.Resources["AcrylicGridItemWidth"] as double?;
                     if (gridItemWidth != null)
                         foreach (var index in distinctLabels)
                         {
@@ -52,16 +57,25 @@ namespace Touch.ViewModels
                             {
                                 var bitmap = new BitmapImage();
                                 bitmap.SetSource(thumbnail);
-                                var categoryObject = new CategoryObject
+                                var categoryObject = new LabelObject
                                 {
                                     Name = new Category().Get(index),
-                                    Thumbnail = bitmap
+                                    CoverThumbnail = bitmap
                                 };
-                                CategoryObjects.Add(categoryObject);
+                                LabelObjects.Add(categoryObject);
                             }
                         }
                 }
             });
+        }
+
+        /// <summary>
+        ///     Navigate to <see cref="ObjectDetailsPage" />
+        /// </summary>
+        /// <param name="labelObject">Classification object</param>
+        public void NavigateToDetailsage(object labelObject)
+        {
+            _navigationService.NavigateAsync(typeof(ObjectDetailsPage), labelObject);
         }
     }
 }

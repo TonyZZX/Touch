@@ -25,6 +25,7 @@
             </StackPanel>
         </Grid>
 
-        <controls:GridViewControl Grid.Row="1" ItemsSource="{x:Bind _viewModel.CategoryObjects, Mode=OneWay}" />
+        <controls:AcrylicGridViewControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.LabelObjects, Mode=OneWay}"
+                                         ItemClick="GridViewControl_OnItemClick" />
     </Grid>
 </Page>

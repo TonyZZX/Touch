@@ -1,0 +1,54 @@
+<Page
+    x:Class="Touch.Views.Pages.ObjectDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:controls="using:Touch.Views.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="ObjectDetailsPage_OnLoadedAsync">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <TextBlock x:Name="TitleText" Style="{StaticResource PageTitleStyle}" />
+                    <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed" />
+                </Grid>
+                <ProgressBar Style="{StaticResource HeaderProgressBarStyle}" />
+            </StackPanel>
+        </Grid>
+
+        <ParallaxView Grid.Row="1" VerticalAlignment="Top" Margin="{StaticResource ContentPadding}" Height="420"
+                      Source="{x:Bind ForegroundElement}" VerticalShift="0">
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Source="{x:Bind _viewModel.LabelObject.CoverThumbnail, Mode=OneWay}" Stretch="UniformToFill"
+                   animations:Connected.Key="CoverImage" />
+        </ParallaxView>
+        <ScrollViewer Grid.Row="1" x:Name="ForegroundElement">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="420" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid x:Name="Mask" Grid.Row="0" Padding="{StaticResource ContentPadding}">
+                    <Rectangle Fill="#20000000" />
+                    <TextBlock Margin="0,0,0,48" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                               Style="{ThemeResource HeaderTextBlockStyle}"
+                               Text="{x:Bind _viewModel.LabelObject.Name, Mode=OneWay}" Foreground="White"
+                               FontWeight="Bold" />
+                </Grid>
+                <Grid Grid.Row="1" Background="White">
+                    <controls:GalleryGridViewControl ItemsSource="{x:Bind _viewModel.Images, Mode=OneWay}" />
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

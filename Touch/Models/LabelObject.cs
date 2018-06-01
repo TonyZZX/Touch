@@ -9,7 +9,7 @@ namespace Touch.Models
     /// <summary>
     ///     Classification object
     /// </summary>
-    public class CategoryObject
+    public class LabelObject
     {
         /// <summary>
         ///     Object name in category
@@ -19,6 +19,6 @@ namespace Touch.Models
         /// <summary>
         ///     Thumbnail of the image which contains this object
         /// </summary>
-        public BitmapImage Thumbnail { get; set; }
+        public BitmapImage CoverThumbnail { get; set; }
     }
 }

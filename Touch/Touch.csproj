@@ -96,10 +96,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\CategoryObject.cs" />
+    <Compile Include="Models\LabelObject.cs" />
     <Compile Include="Models\ImageGroup.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\ObjectDetailsViewModel.cs" />
     <Compile Include="ViewModels\ObjectsViewModel.cs" />
+    <Compile Include="ViewModels\SelectedImagesViewModel.cs" />
     <Compile Include="Views\Controls\AdaptiveGridView.cs" />
     <Compile Include="Helpers\ClassificationHelper.cs" />
     <Compile Include="Helpers\NotificationHelper.cs" />
@@ -111,8 +113,11 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\GallerySearchViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\Controls\GridViewControl.xaml.cs">
-      <DependentUpon>GridViewControl.xaml</DependentUpon>
+    <Compile Include="Views\Controls\AcrylicGridViewControl.xaml.cs">
+      <DependentUpon>AcrylicGridViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\GalleryGridViewControl.xaml.cs">
+      <DependentUpon>GalleryGridViewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\SemanticZoomControl.xaml.cs">
       <DependentUpon>SemanticZoomControl.xaml</DependentUpon>
@@ -125,6 +130,9 @@
     </Compile>
     <Compile Include="Views\Pages\NavRootPage.xaml.cs">
       <DependentUpon>NavRootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ObjectDetailsPage.xaml.cs">
+      <DependentUpon>ObjectDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\ObjectsPage.xaml.cs">
       <DependentUpon>ObjectsPage.xaml</DependentUpon>
@@ -162,7 +170,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\GridViewControl.xaml">
+    <Page Include="Views\Controls\AcrylicGridViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\GalleryGridViewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\NavRootPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ObjectDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,22 +1,16 @@
 #region
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Storage.FileProperties;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Imaging;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.Helpers;
-using Touch.Helpers;
 using Touch.Models;
 
 #endregion
 
 namespace Touch.ViewModels
 {
-    internal class GallerySearchViewModel : NotificationHelper
+    internal class GallerySearchViewModel : SelectedImagesViewModel
     {
         /// <summary>
         ///     Index for the query label
@@ -46,41 +40,21 @@ namespace Touch.ViewModels
         public IEnumerable<ImageGroup> ImageGroup
         {
             get => _imageGroup;
-            private set => SetProperty(ref _imageGroup, value);
+            protected set => SetProperty(ref _imageGroup, value);
         }
 
         /// <summary>
         ///     Load images based on query
         /// </summary>
         /// <returns>Void Task</returns>
-        public async Task LoadImagesAsync()
+        public override async Task LoadImagesAsync()
         {
             if (!_searchLabelIndex.Any()) return;
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                var images = new List<ThumbnailImage>();
-                using (var db = new Database())
-                {
-                    var allImages = db.Images.Include(image => image.Labels).ToList();
-                    var selectedImages = allImages.Where(image => image.IfContainsLabel(_searchLabelIndex)).ToList();
-                    var folders = db.Folders.ToList();
-                    var galleryItemWidth = Application.Current.Resources["GalleryItemWidth"] as double?;
-                    if (galleryItemWidth != null)
-                        foreach (var image in selectedImages)
-                        {
-                            var storageFile = await Utils.GetFileAsync(image.Path, folders);
-                            using (var thumbnail =
-                                await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, (uint) galleryItemWidth))
-                            {
-                                var bitmap = new BitmapImage();
-                                bitmap.SetSource(thumbnail);
-                                var newImage = new ThumbnailImage(image) {Thumbnail = bitmap};
-                                images.Add(newImage);
-                            }
-                        }
-                }
-
-                ImageGroup = images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));
+                await LoadImagesAsync(_searchLabelIndex,
+                    (image, searchLabelIndex) => image.IfContainsLabel(searchLabelIndex));
+                ImageGroup = Images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));
             });
         }
     }

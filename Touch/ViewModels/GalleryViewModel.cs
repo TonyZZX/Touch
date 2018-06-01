@@ -188,7 +188,7 @@ namespace Touch.ViewModels
         ///     Navigate to <see cref="GallerySearchPage" />
         /// </summary>
         /// <param name="query">Query text</param>
-        public void NavigateToSearchPage(string query)
+        public void NavigateToSearchPage(object query)
         {
             _navigationService.NavigateAsync(typeof(GallerySearchPage), query);
         }

@@ -67,7 +67,8 @@
                     <DataTemplate x:DataType="models:ThumbnailImage">
                         <Grid PointerEntered="GridViewItem_PointerEntered" PointerExited="GridViewItem_PointerExited"
                               SizeChanged="GridViewItem_SizeChanged">
-                            <Image VerticalAlignment="Center" Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                            <Image HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
                         </Grid>
                     </DataTemplate>
                 </local:AdaptiveGridView.ItemTemplate>
