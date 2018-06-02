@@ -47,6 +47,10 @@
             </StackPanel>
         </Grid>
 
-        <controls:SemanticZoomControl Grid.Row="1" Source="{x:Bind ViewModel.ImageGroup, Mode=OneWay}" />
+        <controls:SemanticZoomControl Grid.Row="1" Source="{x:Bind ViewModel.ImageGroup, Mode=OneWay}"
+                                      GridViewItemClick="SemanticZoomControl_OnGridViewItemClick" />
+
+        <controls:PhotoDetailControl x:Name="DetailControl" Grid.Row="1" Visibility="Collapsed"
+                                     OnHide="DetailControl_OnHide" />
     </Grid>
 </Page>

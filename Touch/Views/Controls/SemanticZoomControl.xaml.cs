@@ -22,6 +22,13 @@ namespace Touch.Views.Controls
             InitializeComponent();
         }
 
+        public event Action<object, ItemClickEventArgs> GridViewItemClick;
+
+        private void GridView_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            GridViewItemClick?.Invoke(sender, e);
+        }
+
         #region ZoomInOut Animation
 
         private void GridViewItem_PointerEntered(object sender, PointerRoutedEventArgs e)

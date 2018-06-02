@@ -19,7 +19,7 @@
         <SemanticZoom.ZoomedInView>
             <local:AdaptiveGridView Style="{StaticResource GalleryGridViewStyle}"
                                     MinItemWidth="{StaticResource GalleryItemWidth}"
-                                    ItemsSource="{x:Bind Cvs.View, Mode=OneWay}">
+                                    ItemsSource="{x:Bind Cvs.View, Mode=OneWay}" ItemClick="GridView_OnItemClick">
                 <local:AdaptiveGridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
                         <Setter Property="Margin" Value="2" />

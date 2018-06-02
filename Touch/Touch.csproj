@@ -122,6 +122,9 @@
     <Compile Include="Views\Controls\GalleryGridViewControl.xaml.cs">
       <DependentUpon>GalleryGridViewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\PhotoDetailControl.xaml.cs">
+      <DependentUpon>PhotoDetailControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\SemanticZoomControl.xaml.cs">
       <DependentUpon>SemanticZoomControl.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\PhotoDetailControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\SemanticZoomControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +241,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac">
       <Version>4.8.1</Version>
+    </PackageReference>
+    <PackageReference Include="CompositionHelper">
+      <Version>1.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.4</Version>

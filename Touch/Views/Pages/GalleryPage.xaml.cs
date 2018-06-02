@@ -4,6 +4,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Touch.Models;
 using Touch.Services;
 using Touch.ViewModels;
 
@@ -62,6 +63,19 @@ namespace Touch.Views.Pages
         {
             await ViewModel.UploadImagesAsync();
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+        }
+
+        private void SemanticZoomControl_OnGridViewItemClick(object sender, ItemClickEventArgs e)
+        {
+            var imageViewModel = (ThumbnailImage) e.ClickedItem;
+            DetailControl.PhotoDetailImageViewModel = imageViewModel;
+            DetailControl.Visibility = Visibility.Visible;
+            DetailControl.Show();
+        }
+
+        private void DetailControl_OnHide()
+        {
+            DetailControl.Visibility = Visibility.Collapsed;
         }
     }
 }
