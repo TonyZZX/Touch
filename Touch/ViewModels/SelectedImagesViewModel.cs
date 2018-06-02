@@ -34,12 +34,12 @@ namespace Touch.ViewModels
         /// <param name="param">Parameter in selectFunc</param>
         /// <param name="selectFunc">Selecting function</param>
         /// <returns>Void Task</returns>
-        protected async Task LoadImagesAsync<T>(T param, Func<Image, T, bool> selectFunc)
+        protected async Task LoadImagesAsync<T>(T param, Func<Image, bool> selectFunc)
         {
             using (var db = new Database())
             {
                 var allImages = db.Images.Include(image => image.Labels).ToList();
-                var selectedImages = allImages.Where(image => selectFunc(image, param)).ToList();
+                var selectedImages = allImages.Where(selectFunc).ToList();
                 var folders = db.Folders.ToList();
                 var galleryItemWidth = Application.Current.Resources["GalleryItemWidth"] as double?;
                 if (galleryItemWidth != null)

@@ -11,11 +11,11 @@ using Touch.Views.Pages;
 
 namespace Touch.ViewModels
 {
-    internal class ObjectsViewModel : AcrylicGridViewModel
+    internal class DatesViewModel : AcrylicGridViewModel
     {
         private readonly INavigationService _navigationService;
 
-        public ObjectsViewModel(INavigationService navigationService)
+        public DatesViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }
@@ -30,20 +30,20 @@ namespace Touch.ViewModels
             {
                 using (var db = new Database())
                 {
-                    var distinctLabels = db.Labels.Select(label => label.Index).ToHashSet();
-                    await LoadObjectsAsync(distinctLabels, (image, index) => image.IfContainsLabel(index),
-                        index => new Category().Get(index));
+                    var distinctDates = db.Images.Select(image => new ThumbnailImage(image).MonthYear).ToHashSet();
+                    await LoadObjectsAsync(distinctDates, (image, date) => new ThumbnailImage(image).MonthYear == date,
+                        date => date);
                 }
             });
         }
 
         /// <summary>
-        ///     Navigate to <see cref="ObjectDetailsPage" />
+        ///     Navigate to <see cref="DateDetailsPage" />
         /// </summary>
         /// <param name="labelObject">Classification object</param>
         public void NavigateToDetailsage(object labelObject)
         {
-            _navigationService.NavigateAsync(typeof(ObjectDetailsPage), labelObject);
+            _navigationService.NavigateAsync(typeof(DateDetailsPage), labelObject);
         }
     }
 }

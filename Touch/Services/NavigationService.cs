@@ -50,6 +50,7 @@ namespace Touch.Services
             _pageDelegateDict = new Dictionary<Type, NavigatedToViewModelDelegate>();
             RegisterPageViewModel<GalleryPage, GalleryViewModel>();
             RegisterPageViewModel<ObjectsPage, ObjectsViewModel>();
+            RegisterPageViewModel<DatesPage, DatesViewModel>();
         }
 
         /// <summary>

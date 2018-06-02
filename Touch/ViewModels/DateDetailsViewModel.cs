@@ -8,9 +8,9 @@ using Touch.Models;
 
 namespace Touch.ViewModels
 {
-    internal class ObjectDetailsViewModel : SelectedImagesViewModel
+    internal class DateDetailsViewModel : SelectedImagesViewModel
     {
-        public ObjectDetailsViewModel(LabelObject labelObject)
+        public DateDetailsViewModel(LabelObject labelObject)
         {
             LabelObject = labelObject;
         }
@@ -22,11 +22,10 @@ namespace Touch.ViewModels
 
         public override async Task LoadImagesAsync()
         {
-            var labelIndex = new Category().Get(LabelObject.Name);
+            var date = LabelObject.Name;
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                await LoadImagesAsync(labelIndex,
-                    image => image.IfContainsLabel(labelIndex));
+                await LoadImagesAsync(date, image => new ThumbnailImage(image).MonthYear == date);
             });
         }
     }

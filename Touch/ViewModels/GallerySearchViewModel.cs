@@ -52,8 +52,7 @@ namespace Touch.ViewModels
             if (!_searchLabelIndex.Any()) return;
             await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                await LoadImagesAsync(_searchLabelIndex,
-                    (image, searchLabelIndex) => image.IfContainsLabel(searchLabelIndex));
+                await LoadImagesAsync(_searchLabelIndex, image => image.IfContainsLabel(_searchLabelIndex));
                 ImageGroup = Images.GroupBy(image => image.MonthYear, (key, list) => new ImageGroup(key, list));
             });
         }

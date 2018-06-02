@@ -66,6 +66,7 @@ namespace Touch
             builder.RegisterType<NavigationService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<GalleryViewModel>();
             builder.RegisterType<ObjectsViewModel>();
+            builder.RegisterType<DatesViewModel>();
             var container = builder.Build();
             rootPage.InitializeNavigationService(container.Resolve<INavigationService>());
 

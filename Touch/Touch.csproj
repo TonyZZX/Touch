@@ -98,6 +98,9 @@
     </Compile>
     <Compile Include="Models\LabelObject.cs" />
     <Compile Include="Models\ImageGroup.cs" />
+    <Compile Include="ViewModels\AcrylicGridViewModel.cs" />
+    <Compile Include="ViewModels\DateDetailsViewModel.cs" />
+    <Compile Include="ViewModels\DatesViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\ObjectDetailsViewModel.cs" />
     <Compile Include="ViewModels\ObjectsViewModel.cs" />
@@ -122,6 +125,12 @@
     <Compile Include="Views\Controls\SemanticZoomControl.xaml.cs">
       <DependentUpon>SemanticZoomControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\DateDetailsPage.xaml.cs">
+      <DependentUpon>DateDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\DatesPage.xaml.cs">
+      <DependentUpon>DatesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\GalleryPage.xaml.cs">
       <DependentUpon>GalleryPage.xaml</DependentUpon>
     </Compile>
@@ -136,6 +145,9 @@
     </Compile>
     <Compile Include="Views\Pages\ObjectsPage.xaml.cs">
       <DependentUpon>ObjectsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\PlacesPage.xaml.cs">
+      <DependentUpon>PlacesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -182,6 +194,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Pages\DateDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\DatesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Pages\GalleryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\ObjectsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\PlacesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

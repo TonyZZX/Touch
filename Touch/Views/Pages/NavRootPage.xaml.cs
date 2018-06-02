@@ -59,8 +59,14 @@ namespace Touch.Views.Pages
                     case "Gallery":
                         _navigationService.NavigateAsync(typeof(GalleryPage));
                         break;
-                    case "Objects":
+                    case "Labels":
                         _navigationService.NavigateAsync(typeof(ObjectsPage));
+                        break;
+                    case "Dates":
+                        _navigationService.NavigateAsync(typeof(DatesPage));
+                        break;
+                    case "Places":
+                        _navigationService.NavigateAsync(typeof(PlacesPage));
                         break;
                 }
         }

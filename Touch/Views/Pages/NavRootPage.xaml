@@ -17,9 +17,19 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB9F;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Objects">
+                <NavigationViewItem Content="Labels">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B8;" />
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C1;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Dates">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE787;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Places">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
