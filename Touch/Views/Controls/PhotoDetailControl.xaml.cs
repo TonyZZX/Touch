@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Composition;
@@ -10,6 +11,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using CompositionHelper;
+using Microsoft.EntityFrameworkCore;
 using Touch.Models;
 
 #endregion
@@ -56,6 +58,11 @@ namespace Touch.Views.Controls
         public void Show()
         {
             DetailImage.Source = PhotoDetailImageViewModel.Thumbnail;
+            using (var db = new Database())
+            {
+                var image = db.Images.Include(img => img.Labels).First(img => img.Equals(PhotoDetailImageViewModel.ConvertToImage()));
+                LabelList.ItemsSource = image.Labels.ToList();
+            }
             ToggleDetailGridAnimation(true);
         }
 

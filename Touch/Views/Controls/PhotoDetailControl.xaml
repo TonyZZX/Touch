@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Touch.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -22,7 +24,36 @@
                        Stretch="Uniform" />
             </Grid>
             <Grid x:Name="InfoPlaceHolderGrid" Grid.Row="1" SizeChanged="InfoPlaceHolderGrid_SizeChanged">
-                <Grid x:Name="InfoGrid" Background="AntiqueWhite" />
+                <Grid x:Name="InfoGrid" Background="AntiqueWhite">
+                    <ListView x:Name="LabelList" SelectionMode="None" IsItemClickEnabled="False"
+                              ItemsSource="{x:Bind PhotoDetailImageViewModel.Labels, Mode=OneWay}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="MinWidth" Value="0" />
+                                <Setter Property="Padding" Value="8" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Label">
+                                <Border Padding="8,4" BorderBrush="Black" BorderThickness="1" CornerRadius="8">
+                                    <Grid MinWidth="32">
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Text="{x:Bind Name, Mode=OneWay}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
             </Grid>
             <StackPanel x:Name="OperationSp" Grid.Row="0" Margin="0,0,8,-35" HorizontalAlignment="Right"
                         VerticalAlignment="Bottom" Orientation="Horizontal">
