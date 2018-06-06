@@ -68,6 +68,9 @@ namespace Touch.Views.Pages
                     case "Places":
                         _navigationService.NavigateAsync(typeof(PlacesPage));
                         break;
+                    case "Memories":
+                        _navigationService.NavigateAsync(typeof(MemoriesPage));
+                        break;
                 }
         }
 
