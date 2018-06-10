@@ -1,7 +1,13 @@
 #region
 
+#region
+
 using System;
 using System.ComponentModel.DataAnnotations;
+
+#endregion
+
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 #endregion
 
@@ -31,7 +37,6 @@ namespace Touch.Database
             return obj.GetType() == GetType() && Equals((TagBase) obj);
         }
 
-        // ReSharper disable once NonReadonlyMemberInGetHashCode
         public override int GetHashCode()
         {
             return Name != null ? Name.GetHashCode() : 0;

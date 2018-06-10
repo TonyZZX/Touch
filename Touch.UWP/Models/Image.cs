@@ -163,7 +163,9 @@ namespace Touch.Models
             foreach (var folder in folders)
             {
                 relativePath = folder.GetRelativePath(filePath);
-                if (relativePath != "") fileFolder = folder;
+                if (relativePath == "") continue;
+                fileFolder = folder;
+                break;
             }
 
             if (fileFolder == null || relativePath == "") return null;

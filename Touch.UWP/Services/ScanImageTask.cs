@@ -139,7 +139,14 @@ namespace Touch.Services
                 if (hasOldImages)
                     try
                     {
-                        var unexistedImages = oldImages.AsEnumerable().Intersect(oldImagesSet.ToList());
+                        var unexistedImages = oldImages.AsEnumerable().Intersect(oldImagesSet.ToList()).ToList();
+                        // Delete cascade
+                        foreach (var image in unexistedImages)
+                        {
+                            var tags = image.Tags;
+                            foreach (var tag in tags) db.Tags.Remove(tag);
+                        }
+
                         db.Images.RemoveRange(unexistedImages);
                         db.SaveChanges();
                     }
